@@ -12,10 +12,10 @@ int partition(int* a, int low, int high);
 void main()
 {
 	const int iArraySize = 10;
-	int iArray[iArraySize] = { 12, 32, 4, 1, 22, 35, 1, 23, 15 ,7 };
+	int iArray[iArraySize] = { 3, 5, 4, 1, 2, 6, 8, 9, 7, 10};
 	//sort(iArray, iArraySize);
-	Bogosort(iArray, iArraySize);
-	//QuickSort(iArray, 1, 35);
+	//Bogosort(iArray, iArraySize);
+	QuickSort(iArray, 0, iArraySize);
 
 	for (int i = 0; i < iArraySize; i++)
 	{
@@ -120,23 +120,19 @@ void QuickSort(int* a, int low, int high)
 int partition(int* a, int low, int high)
 {
 	int pivot = a[low];
-	int leftwall = low;
+	int left = low;
 
-	for (int j = low + 1; j < high; j++)
+	for (int i = low + 1; i < high; i++)
 	{
-		if (a[j] < pivot)
+		if (a[i] <= pivot)
 		{
-			std::swap(a[j], a[leftwall]);
-
-			leftwall = leftwall + 1;
+			std::swap(a[i], a[left]);
+			++left;
 		}
 	}
+	std::swap(pivot, a[left]);
 
-	int temp = pivot;
-	pivot = a[leftwall];
-	a[leftwall] = temp;
-
-	return leftwall;
+	return left;
 }
 
 
