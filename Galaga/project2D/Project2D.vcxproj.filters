@@ -21,7 +21,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Obect.cpp">
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +32,10 @@
     <ClInclude Include="Application2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Obect.h">
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

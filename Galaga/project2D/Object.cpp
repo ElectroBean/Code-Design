@@ -1,6 +1,28 @@
-#include "Obect.h"
+#include "Object.h"
 
 
+Object::Object()
+{
+	//identity matrix
+	Local = new Matrix3();
+	//set rotation of matrix
+	Local->setRotateZ(0);
+	//set direction (right, forward, position)
+	V3Direction = (*Local)[1];
+	//set position
+	(*Local)[2] = Vector3();
+
+	Texture = new aie::Texture();
+
+	Global = new Matrix3(*Local);
+	fHealth = 100.0f;
+	m_bullet = new aie::Texture("./textures/roundthing.png");
+
+	for (int i = 0; i < 100; i++)
+	{
+		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
+	}
+}
 
 Object::Object(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture)
 {
@@ -16,6 +38,15 @@ Object::Object(const Vector3& a_pos, const float a_rotation, aie::Texture* const
 	Texture = a_texture;
 
 	Global = new Matrix3(*Local);
+
+	float fHealth = 100.0f;
+
+	m_bullet = new aie::Texture("./textures/roundthing.png");
+
+	for (int i = 0; i < 100; i++)
+	{
+		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
+	}
 }
 
 
@@ -23,10 +54,23 @@ Object::~Object()
 {
 	delete Local;
 	delete Global;
+	delete m_bullet;
+	for (int i = 0; i < 100; i++)
+	{
+		delete mBullets[i];
+	}
 }
 
 void Object::Update(const float deltaTime)
 {
+	shootTimer -= deltaTime;
+	for (int i = 0; i < 100; i++)
+	{
+		if (mBullets[i]->isVisible)
+		{
+			mBullets[i]->update(deltaTime);
+		}
+	}
 	if (fSpeed < 0)
 	{
 		fSpeed = 0;
@@ -55,11 +99,35 @@ void Object::Update(const float deltaTime)
 		{
 			Local->columns[2].x += (500.0f * deltaTime);
 		}
+		if (input->isKeyDown(aie::INPUT_KEY_SPACE))
+		{
+			shooting = true;
+		}
+		if (input->isKeyUp(aie::INPUT_KEY_SPACE))
+		{
+			shooting = false;
+		}
+	}
+	if (shooting && shootTimer <= 0)
+	{
+		ShootBullet();
+		shootTimer += 0.2f;
+	}
+	if (shootTimer < 0)
+	{
+		shootTimer = 0;
 	}
 }
 
 void Object::Draw(aie::Renderer2D * a_Render)
 {
+	for (int i = 0; i < 100; i++)
+	{
+		if (mBullets[i]->isVisible)
+		{
+			a_Render->drawSpriteTransformed3x3(m_bullet, (float*)mBullets[i]->Local, 32, 32);
+		}
+	}
 	a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 93 / 2, 80 / 2);
 }
 
@@ -99,5 +167,23 @@ void Object::ScreenWrap()
 	if (Local->columns[2].y < 0)
 	{
 		Local->columns[2].y = 720;
+	}
+}
+
+void Object::takeDamage(int aDamage)
+{
+}
+
+void Object::ShootBullet()
+{
+	for (int i = 0; i < 100; i++)
+	{
+		if (!mBullets[i]->isVisible)
+		{
+			mBullets[i]->SetRotation(rotation);
+			mBullets[i]->setPosition(Global->columns[2]);
+			mBullets[i]->isVisible = true;
+			return;
+		}
 	}
 }

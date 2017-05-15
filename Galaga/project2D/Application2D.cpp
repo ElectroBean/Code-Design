@@ -21,8 +21,6 @@ bool Application2D::startup() {
 
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 
-	m_bullet = new aie::Texture("./textures/roundthing.png");
-
 	m_cameraX = 0;
 	m_cameraY = 0;
 	m_timer = 0;
@@ -40,7 +38,6 @@ void Application2D::shutdown() {
 	delete m_shipTexture;
 	delete m_2dRenderer;
 	delete NotShip;
-	delete m_bullet;
 	delete collision1;
 	delete collision2;
 }

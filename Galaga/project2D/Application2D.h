@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "Renderer2D.h"
 #include "Audio.h"
-#include "Obect.h"
+#include "Object.h"
 #include "aabb.h"
 
 class Application2D : public aie::Application {
@@ -26,7 +26,6 @@ protected:
 	aie::Texture*		m_shipTexture;
 	aie::Font*			m_font;
 	aie::Audio*			m_audio;
-	aie::Texture*		m_bullet;
 
 	float m_cameraX, m_cameraY;
 	float m_timer;
