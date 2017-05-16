@@ -14,7 +14,7 @@ public:
 	Object();
 	Object(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture);
 	virtual ~Object();// = 0 {};
-	virtual void Update(const float deltaTime);
+	virtual void Update(const float deltaTime, aie::Renderer2D * a_Render);
 	void Draw(aie::Renderer2D* a_Render);
 	void SetSpeed(const float a_speed);
 	void SetRotation(const float a_rotation);

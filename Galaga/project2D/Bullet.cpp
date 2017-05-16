@@ -9,6 +9,7 @@ Bullet::Bullet(const Vector3& a_pos, const float a_rotation, aie::Texture* const
 	Local->setRotateZ(a_rotation);
 	Texture = a_texture;
 	Global = new Matrix3(*Local);
+	collCheck = new aabb(a_pos.x, a_pos.y, 32 / 2, 32 / 2);
 }
 
 Bullet::~Bullet()
@@ -17,14 +18,17 @@ Bullet::~Bullet()
 
 void Bullet::update(float deltaTime)
 {
-	Local->columns[2].y += 1000.0f * deltaTime;
+	Local->columns[2].y += 1500.0f * deltaTime;
 	*Global = *(Local);
 	ScreenWrap();
+	collCheck->x = Local->columns[2].x;
+	collCheck->y = Local->columns[2].y;
 }
 
 void Bullet::Draw(aie::Renderer2D * a_Render)
 {
 	a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 93 / 2, 80 / 2);
+	drawAABB(a_Render);
 }
 
 void Bullet::SetRotation(const float a_rotation)
@@ -47,7 +51,7 @@ void Bullet::SetSpeed(const float a_speed)
 
 void Bullet::ScreenWrap()
 {
-	if (Local->columns[2].x > 1280)
+	if (Local->columns[2].x > 1080)
 	{
 		isVisible = false;
 	}
@@ -63,4 +67,16 @@ void Bullet::ScreenWrap()
 	{
 		isVisible = false;
 	}
+}
+
+void Bullet::drawAABB(aie::Renderer2D* renderer)
+{
+	// LEFT
+	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y - collCheck->halfheight, collCheck->x - collCheck->halfwidth, collCheck->y + collCheck->halfheight);
+	// collCheck
+	renderer->drawLine(collCheck->x + collCheck->halfwidth, collCheck->y - collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y + collCheck->halfheight);
+	// TOP
+	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y + collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y + collCheck->halfheight);
+	// BOTTOM
+	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y - collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y - collCheck->halfheight);
 }

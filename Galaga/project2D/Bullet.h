@@ -4,7 +4,7 @@
 #include <Vector3.h>
 #include <Matrix3D.h>
 #include <Texture.h>
-#include <Renderer2D.h>
+#include "Renderer2D.h""
 
 class Bullet 
 {
@@ -22,6 +22,7 @@ public:
 
 	void SetSpeed(const float a_speed);
 	void ScreenWrap();
+	void drawAABB(aie::Renderer2D * renderer);
 	float rotation = 0.0f;
 	bool isVisible = false;
 	Matrix3*		Global = nullptr;
@@ -32,6 +33,7 @@ private:
 	aie::Texture*	Texture = nullptr;
 	float fSpeed = 0.0f;
 	float fHealth = 100.0f;
+	aabb* collCheck = nullptr;
 
 	Vector3 V3Direction = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3 V3Velocity = Vector3(0.0f, 0.0f, 0.0f);

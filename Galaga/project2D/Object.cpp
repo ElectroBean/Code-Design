@@ -16,7 +16,7 @@ Object::Object()
 
 	Global = new Matrix3(*Local);
 	fHealth = 100.0f;
-	m_bullet = new aie::Texture("./textures/roundthing.png");
+	m_bullet = new aie::Texture("./textures/laser.png");
 
 	for (int i = 0; i < 100; i++)
 	{
@@ -41,7 +41,7 @@ Object::Object(const Vector3& a_pos, const float a_rotation, aie::Texture* const
 
 	float fHealth = 100.0f;
 
-	m_bullet = new aie::Texture("./textures/roundthing.png");
+	m_bullet = new aie::Texture("./textures/laser.png");
 
 	for (int i = 0; i < 100; i++)
 	{
@@ -61,7 +61,7 @@ Object::~Object()
 	}
 }
 
-void Object::Update(const float deltaTime)
+void Object::Update(const float deltaTime, aie::Renderer2D * a_Render)
 {
 	shootTimer -= deltaTime;
 	for (int i = 0; i < 100; i++)
@@ -88,8 +88,7 @@ void Object::Update(const float deltaTime)
 		*Global = *(Local);
 
 		SetRotation(rotation);
-		SetSpeed(fSpeed);
-		//Global->columns[2] = Global->columns[2] + (V3Velocity * deltaTime);
+		SetSpeed(fSpeed); 
 
 		if (input->isKeyDown(aie::INPUT_KEY_LEFT))
 		{
@@ -125,7 +124,7 @@ void Object::Draw(aie::Renderer2D * a_Render)
 	{
 		if (mBullets[i]->isVisible)
 		{
-			a_Render->drawSpriteTransformed3x3(m_bullet, (float*)mBullets[i]->Local, 32, 32);
+			mBullets[i]->Draw(a_Render);
 		}
 	}
 	a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 93 / 2, 80 / 2);

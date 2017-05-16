@@ -45,7 +45,7 @@ void Application2D::shutdown() {
 void Application2D::update(float deltaTime) {
 
 	m_timer += deltaTime;
-	NotShip->Update(deltaTime);
+	NotShip->Update(deltaTime, m_2dRenderer);
 	// input example
 	aie::Input* input = aie::Input::getInstance();
 
