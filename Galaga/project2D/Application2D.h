@@ -5,6 +5,7 @@
 #include "Audio.h"
 #include "Object.h"
 #include "aabb.h"
+#include "Alien.h"
 
 class Application2D : public aie::Application {
 public:
@@ -36,4 +37,6 @@ protected:
 
 	aabb*	collision1;
 	aabb*	collision2;
+
+	Alien*	alien1;
 };

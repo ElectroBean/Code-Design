@@ -28,6 +28,7 @@ bool Application2D::startup() {
 	NotShip = new Object(Vector3(600, 50, 1), 3.14, m_shipTexture);
 	collision1 = new aabb(10, 10, 25, 25);
 	collision2 = new aabb(50, 50, 40, 40);
+	alien1 = new Alien(Vector3(100, 680, 0), 0, new aie::Texture("./textures/car.png"));
 	return true;
 }
 
@@ -72,6 +73,7 @@ void Application2D::draw() {
 	NotShip->Draw(m_2dRenderer);
 	drawAABB(*collision1, m_2dRenderer);
 	drawAABB(*collision2, m_2dRenderer);
+	alien1->Draw(m_2dRenderer);
 
 	// output some text, uses the last used colour
 	char fps[32];
