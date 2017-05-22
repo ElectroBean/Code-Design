@@ -24,6 +24,8 @@ public:
 	void takeDamage(int aDamage);
 	void ShootBullet();
 
+	void drawAABB(aie::Renderer2D * renderer);
+
 	Matrix3*		Global = nullptr;
 private:
 	Object * parent = nullptr;
@@ -36,6 +38,7 @@ private:
 	float shootTimer = 0.0f;
 	bool shooting = false;
 	aie::Texture*		m_bullet;
+	aabb*	collCheck;
 
 	Vector3 V3Direction = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3 V3Velocity = Vector3(0.0f, 0.0f, 0.0f);

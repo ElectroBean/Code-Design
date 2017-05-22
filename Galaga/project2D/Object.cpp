@@ -22,6 +22,7 @@ Object::Object()
 	{
 		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
 	}
+	collCheck = new aabb(Global->position.x, Global->position.y, 93 / 2, 80 / 2);
 }
 
 Object::Object(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture)
@@ -47,6 +48,7 @@ Object::Object(const Vector3& a_pos, const float a_rotation, aie::Texture* const
 	{
 		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
 	}
+	collCheck = new aabb(Global->position.x, Global->position.y, 93 / 4, 80 / 4);
 }
 
 
@@ -116,10 +118,13 @@ void Object::Update(const float deltaTime, aie::Renderer2D * a_Render)
 	{
 		shootTimer = 0;
 	}
+	collCheck->x = Global->position.x;
+	collCheck->y = Global->position.y;
 }
 
 void Object::Draw(aie::Renderer2D * a_Render)
 {
+	drawAABB(a_Render);
 	for (int i = 0; i < 100; i++)
 	{
 		if (mBullets[i]->isVisible)
@@ -185,4 +190,16 @@ void Object::ShootBullet()
 			return;
 		}
 	}
+}
+
+void Object::drawAABB(aie::Renderer2D* renderer)
+{
+	// LEFT
+	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y - collCheck->halfheight, collCheck->x - collCheck->halfwidth, collCheck->y + collCheck->halfheight);
+	// collCheck
+	renderer->drawLine(collCheck->x + collCheck->halfwidth, collCheck->y - collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y + collCheck->halfheight);
+	// TOP
+	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y + collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y + collCheck->halfheight);
+	// BOTTOM
+	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y - collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y - collCheck->halfheight);
 }

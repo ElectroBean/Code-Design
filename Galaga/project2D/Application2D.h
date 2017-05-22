@@ -19,6 +19,8 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 	void drawAABB(const aabb & aabb, aie::Renderer2D * renderer);
+	void detectAlien();
+	void detectBullets();
 
 protected:
 
@@ -34,9 +36,6 @@ protected:
 	Object* NotShip;
 	Object* NotShipChild;
 	Object* NotShipChild2;
-
-	aabb*	collision1;
-	aabb*	collision2;
 
 	Alien*	alien1;
 };

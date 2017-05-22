@@ -26,8 +26,6 @@ bool Application2D::startup() {
 	m_timer = 0;
 
 	NotShip = new Object(Vector3(600, 50, 1), 3.14, m_shipTexture);
-	collision1 = new aabb(10, 10, 25, 25);
-	collision2 = new aabb(50, 50, 40, 40);
 	alien1 = new Alien(Vector3(100, 680, 0), 0, new aie::Texture("./textures/car.png"));
 	return true;
 }
@@ -39,8 +37,6 @@ void Application2D::shutdown() {
 	delete m_shipTexture;
 	delete m_2dRenderer;
 	delete NotShip;
-	delete collision1;
-	delete collision2;
 }
 
 void Application2D::update(float deltaTime) {
@@ -49,9 +45,6 @@ void Application2D::update(float deltaTime) {
 	NotShip->Update(deltaTime, m_2dRenderer);
 	// input example
 	aie::Input* input = aie::Input::getInstance();
-
-	collision1->x = NotShip->Global->position.x;
-	collision1->y = NotShip->Global->position.y;
 
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
@@ -71,19 +64,12 @@ void Application2D::draw() {
 
 	//draw ships
 	NotShip->Draw(m_2dRenderer);
-	drawAABB(*collision1, m_2dRenderer);
-	drawAABB(*collision2, m_2dRenderer);
 	alien1->Draw(m_2dRenderer);
 
 	// output some text, uses the last used colour
 	char fps[32];
 	sprintf_s(fps, 32, "FPS: %i", getFPS());
 	m_2dRenderer->drawText(m_font, fps, 0, 720 - 32);
-
-	if (collision1->collidesWith(*collision2))
-	{
-		m_2dRenderer->drawText(m_font, "SNAPE KILLS DUMBLEDORE", getWindowWidth() / 3, getWindowHeight() - 100);
-	}
 
 	// done drawing sprites
 	m_2dRenderer->end();
@@ -99,3 +85,14 @@ void Application2D::drawAABB(const aabb& aabb, aie::Renderer2D* renderer) {
 	// BOTTOM
 	renderer->drawLine(aabb.x - aabb.halfwidth, aabb.y - aabb.halfheight, aabb.x + aabb.halfwidth, aabb.y - aabb.halfheight);
 }
+
+void Application2D::detectAlien()
+{
+
+}
+
+void Application2D::detectBullets()
+{
+
+}
+

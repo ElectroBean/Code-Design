@@ -14,6 +14,8 @@ public:
 	void Update(float deltaTime);
 	void Draw(aie::Renderer2D * a_Render);
 
+	void drawAABB(aie::Renderer2D * renderer);
+
 	Matrix3*		Global = nullptr;
 private:
 	Object * parent = nullptr;

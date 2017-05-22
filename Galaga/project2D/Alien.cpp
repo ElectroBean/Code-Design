@@ -15,6 +15,7 @@ Alien::Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a
 	{
 		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
 	}
+	collCheck = new aabb(Global->position.x, Global->position.y, 93 / 4, 80 / 4);
 }
 
 Alien::~Alien()
@@ -27,17 +28,13 @@ Alien::~Alien()
 	{
 		delete mBullets[i];
 	}
+	delete collCheck;
 }
 
 void Alien::Move(float deltaTime)
 {
 	float moveTimer = 5;
 	moveTimer -= deltaTime;
-
-
-
-
-
 
 	if (moveTimer <= 0)
 	{
@@ -55,4 +52,17 @@ void Alien::Update(float deltaTime)
 void Alien::Draw(aie::Renderer2D * a_Render)
 {
 	a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 93 / 2, 80 / 2);
+	drawAABB(a_Render);
+}
+
+void Alien::drawAABB(aie::Renderer2D* renderer)
+{
+	// LEFT
+	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y - collCheck->halfheight, collCheck->x - collCheck->halfwidth, collCheck->y + collCheck->halfheight);
+	// collCheck
+	renderer->drawLine(collCheck->x + collCheck->halfwidth, collCheck->y - collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y + collCheck->halfheight);
+	// TOP
+	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y + collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y + collCheck->halfheight);
+	// BOTTOM
+	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y - collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y - collCheck->halfheight);
 }
