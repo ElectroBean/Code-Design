@@ -12,7 +12,7 @@ Object::Object()
 	//set position
 	(*Local)[2] = Vector3();
 
-	Texture = new aie::Texture();
+	playerTexture = new aie::Texture();
 
 	Global = new Matrix3(*Local);
 	fHealth = 100.0f;
@@ -36,7 +36,7 @@ Object::Object(const Vector3& a_pos, const float a_rotation, aie::Texture* const
 	//set position
 	(*Local)[2] = a_pos;
 
-	Texture = a_texture;
+	playerTexture = a_texture;
 
 	Global = new Matrix3(*Local);
 
@@ -61,9 +61,10 @@ Object::~Object()
 	{
 		delete mBullets[i];
 	}
+	delete collCheck;
 }
 
-void Object::Update(const float deltaTime, aie::Renderer2D * a_Render)
+void Object::Update(const float deltaTime)
 {
 	shootTimer -= deltaTime;
 	for (int i = 0; i < 100; i++)
@@ -132,7 +133,7 @@ void Object::Draw(aie::Renderer2D * a_Render)
 			mBullets[i]->Draw(a_Render);
 		}
 	}
-	a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 93 / 2, 80 / 2);
+	a_Render->drawSpriteTransformed3x3(playerTexture, (float*)Global, 93 / 2, 80 / 2);
 }
 
 void Object::SetSpeed(const float a_speed)

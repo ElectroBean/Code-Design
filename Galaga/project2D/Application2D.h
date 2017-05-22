@@ -3,9 +3,7 @@
 #include "Application.h"
 #include "Renderer2D.h"
 #include "Audio.h"
-#include "Object.h"
-#include "aabb.h"
-#include "Alien.h"
+#include "GameManager.h"
 
 class Application2D : public aie::Application {
 public:
@@ -18,24 +16,14 @@ public:
 
 	virtual void update(float deltaTime);
 	virtual void draw();
-	void drawAABB(const aabb & aabb, aie::Renderer2D * renderer);
-	void detectAlien();
-	void detectBullets();
 
 protected:
 
 	aie::Renderer2D*	m_2dRenderer;
-	aie::Texture*		m_texture;
-	aie::Texture*		m_shipTexture;
 	aie::Font*			m_font;
 	aie::Audio*			m_audio;
+	GameManager*		m_gameManager;
 
 	float m_cameraX, m_cameraY;
 	float m_timer;
-
-	Object* NotShip;
-	Object* NotShipChild;
-	Object* NotShipChild2;
-
-	Alien*	alien1;
 };

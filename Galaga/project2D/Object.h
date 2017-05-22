@@ -14,7 +14,7 @@ public:
 	Object();
 	Object(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture);
 	virtual ~Object();// = 0 {};
-	virtual void Update(const float deltaTime, aie::Renderer2D * a_Render);
+	virtual void Update(const float deltaTime);
 	void Draw(aie::Renderer2D* a_Render);
 	void SetSpeed(const float a_speed);
 	void SetRotation(const float a_rotation);
@@ -31,7 +31,7 @@ private:
 	Object * parent = nullptr;
 	std::vector<Object>* children = nullptr;
 	Matrix3*		Local = nullptr;
-	aie::Texture*	Texture = nullptr;
+	aie::Texture*	playerTexture = nullptr;
 	float fSpeed = 0.0f;
 	float fHealth = 100.0f;
 	Bullet *mBullets[100];

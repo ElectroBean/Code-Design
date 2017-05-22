@@ -23,7 +23,6 @@ Alien::~Alien()
 	delete Local;
 	delete Global;
 	delete m_bullet;
-	delete mBullets;
 	for (int i = 0; i < 100; i++)
 	{
 		delete mBullets[i];

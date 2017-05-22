@@ -98,6 +98,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="DefenseItem.cpp" />
     <ClCompile Include="Defenses.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
   </ItemGroup>
@@ -107,6 +108,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="DefenseItem.h" />
     <ClInclude Include="Defenses.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="Object.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
