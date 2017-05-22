@@ -22,6 +22,7 @@ private:
 	aie::Texture*	Texture = nullptr;
 	Bullet *mBullets[100];
 	aie::Texture*		m_bullet;
+	aabb*				collCheck;
 
 	Vector3 V3Direction = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3 V3Velocity = Vector3(0.0f, 0.0f, 0.0f);
