@@ -48,7 +48,7 @@ Object::Object(const Vector3& a_pos, const float a_rotation, aie::Texture* const
 	{
 		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
 	}
-	collCheck = new aabb(Global->position.x, Global->position.y, 93 / 4, 80 / 4);
+	collCheck = new aabb(Global->position.x, Global->position.y, 93 / 5, 80 / 5);
 }
 
 
