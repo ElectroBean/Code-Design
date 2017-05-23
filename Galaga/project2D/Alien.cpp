@@ -2,7 +2,7 @@
 
 
 
-Alien::Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture)
+Alien::Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture, Vector3 start, Vector3 end)
 {
 	Local = new Matrix3();
 	Local->setRotateZ(a_rotation);
@@ -16,6 +16,10 @@ Alien::Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a
 		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
 	}
 	collCheck = new aabb(Global->position.x, Global->position.y, 93 / 4, 80 / 4);
+	moveTimer = 9.0f;
+	begin = start;
+	ending = end;
+	moveTimer2 = 0.1f;
 }
 
 Alien::~Alien()
@@ -32,20 +36,22 @@ Alien::~Alien()
 
 void Alien::Move(float deltaTime)
 {
-	float moveTimer = 5;
-	moveTimer -= deltaTime;
-
 	if (moveTimer <= 0)
 	{
 		Local->position.y -= 50;
-		moveTimer = 5;
+		moveTimer = 9;
+		std::cout << "it should've worked" << std::endl;
 	}
 }
 
 void Alien::Update(float deltaTime)
 {
 	*Global = *Local;
-
+	interpolate(deltaTime);
+	collCheck->y = Global->position.y;
+	collCheck->x = Global->position.x;
+	moveTimer -= deltaTime;
+	Move(deltaTime);
 }
 
 void Alien::Draw(aie::Renderer2D * a_Render)
@@ -64,4 +70,30 @@ void Alien::drawAABB(aie::Renderer2D* renderer)
 	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y + collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y + collCheck->halfheight);
 	// BOTTOM
 	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y - collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y - collCheck->halfheight);
+}
+
+void Alien::interpolate(float deltaTime)
+{
+	moveTimer2 += 0.1f * deltaTime;
+	begin = Vector3(80, Local->position.y, 0);
+	ending = Vector3(1000, Local->position.y, 0);
+
+	if (Local->position.x <= 80)
+	{
+		direction = true;
+		moveTimer2 = 0.1f;
+	}
+	else if (Local->position.x >= 1000)
+	{
+		direction = false;
+		moveTimer2 = 0.1f;
+	}
+	if (direction)
+	{
+		Local->position = begin.Interpolate(Vector3(1000, Global->position.y, 0), moveTimer2);
+	}
+	else if (!direction)
+	{
+		Local->position = ending.Interpolate(Vector3(80, Global->position.y, 0), moveTimer2);
+	}
 }

@@ -165,11 +165,12 @@ float & Vector3::operator[](int a_i)
 
 Vector3 Vector3::Interpolate(Vector3 rhs, float t)
 {
-	Vector3 result;
+	return (rhs * (1 - t) + *this * t);
+}
 
-	result = *this + (rhs - *this) * t;
-
-	return result;
+Vector3 Vector3::EaseLerp(Vector3 rhs, float t, float time)
+{
+	
 }
 
 Vector3 operator*(const float a_fscale, const Vector3 & a_RHS)

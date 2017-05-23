@@ -27,13 +27,13 @@ public:
 	bool isVisible = false;
 	Matrix3*		Global = nullptr;
 	Matrix3*		Local = nullptr;
-private:
+	aabb* collCheck = nullptr;
+protected:
 	Bullet * parent = nullptr;
 	std::vector<Bullet>* children = nullptr;
 	aie::Texture*	Texture = nullptr;
 	float fSpeed = 0.0f;
 	float fHealth = 100.0f;
-	aabb* collCheck = nullptr;
 
 	Vector3 V3Direction = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3 V3Velocity = Vector3(0.0f, 0.0f, 0.0f);

@@ -27,18 +27,18 @@ public:
 	void drawAABB(aie::Renderer2D * renderer);
 
 	Matrix3*		Global = nullptr;
-private:
+	Bullet *mBullets[100];
+	aabb*	collCheck;
+protected:
 	Object * parent = nullptr;
 	std::vector<Object>* children = nullptr;
 	Matrix3*		Local = nullptr;
 	aie::Texture*	playerTexture = nullptr;
 	float fSpeed = 0.0f;
 	float fHealth = 100.0f;
-	Bullet *mBullets[100];
 	float shootTimer = 0.0f;
 	bool shooting = false;
 	aie::Texture*		m_bullet;
-	aabb*	collCheck;
 
 	Vector3 V3Direction = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3 V3Velocity = Vector3(0.0f, 0.0f, 0.0f);

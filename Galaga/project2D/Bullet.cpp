@@ -10,6 +10,7 @@ Bullet::Bullet(const Vector3& a_pos, const float a_rotation, aie::Texture* const
 	Texture = a_texture;
 	Global = new Matrix3(*Local);
 	collCheck = new aabb(a_pos.x, a_pos.y, 32 / 2, 32 / 2);
+	isVisible = false;
 }
 
 Bullet::~Bullet()
@@ -18,23 +19,28 @@ Bullet::~Bullet()
 
 void Bullet::update(float deltaTime)
 {
-	Local->columns[2].y += 1500.0f * deltaTime;
-	*Global = *(Local);
-	ScreenWrap();
-	collCheck->x = Local->columns[2].x;
-	collCheck->y = Local->columns[2].y;
+	if (this->isVisible)
+	{
+		*Global = *(Local);
+		collCheck->x = Local->columns[2].x;
+		collCheck->y = Local->columns[2].y;
+		Local->columns[2].y += 1500.0f * deltaTime;
+		ScreenWrap();
+	}
 }
 
 void Bullet::Draw(aie::Renderer2D * a_Render)
 {
-	a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 93 / 2, 80 / 2);
-	drawAABB(a_Render);
+	if (isVisible)
+	{
+		a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 93 / 2, 80 / 2);
+		drawAABB(a_Render);
+	}
 }
 
 void Bullet::SetRotation(const float a_rotation)
 {
 	Local->setRotateZ(a_rotation);
-	//V3Velocity = fSpeed * Local->columns[1];
 }
 
 void Bullet::setPosition(Vector3 position)

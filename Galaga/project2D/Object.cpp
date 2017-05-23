@@ -185,8 +185,8 @@ void Object::ShootBullet()
 	{
 		if (!mBullets[i]->isVisible)
 		{
-			mBullets[i]->SetRotation(rotation);
-			mBullets[i]->setPosition(Global->columns[2]);
+			//mBullets[i]->SetRotation(rotation);
+			mBullets[i]->setPosition(Global->position);
 			mBullets[i]->isVisible = true;
 			return;
 		}
