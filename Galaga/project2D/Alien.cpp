@@ -16,7 +16,6 @@ Alien::Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a
 		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
 	}
 	collCheck = new aabb(Global->position.x, Global->position.y, 93 / 4, 80 / 4);
-	moveTimer = 9.0f;
 	begin = start;
 	ending = end;
 	moveTimer2 = 0.1f;
@@ -34,14 +33,10 @@ Alien::~Alien()
 	delete collCheck;
 }
 
-void Alien::Move(float deltaTime)
+void Alien::Move()
 {
-	if (moveTimer <= 0)
-	{
-		Local->position.y -= 50;
-		moveTimer = 9;
-		std::cout << "it should've worked" << std::endl;
-	}
+	Local->position.y -= 50;
+	std::cout << "it should've worked" << std::endl;
 }
 
 void Alien::Update(float deltaTime)
@@ -51,7 +46,6 @@ void Alien::Update(float deltaTime)
 	collCheck->y = Global->position.y;
 	collCheck->x = Global->position.x;
 	moveTimer -= deltaTime;
-	Move(deltaTime);
 }
 
 void Alien::Draw(aie::Renderer2D * a_Render)
@@ -78,16 +72,6 @@ void Alien::interpolate(float deltaTime)
 	begin = Vector3(80, Local->position.y, 0);
 	ending = Vector3(1000, Local->position.y, 0);
 
-	if (Local->position.x <= 80)
-	{
-		direction = true;
-		moveTimer2 = 0.1f;
-	}
-	else if (Local->position.x >= 1000)
-	{
-		direction = false;
-		moveTimer2 = 0.1f;
-	}
 	if (direction)
 	{
 		Local->position = begin.Interpolate(Vector3(1000, Global->position.y, 0), moveTimer2);
@@ -95,5 +79,17 @@ void Alien::interpolate(float deltaTime)
 	else if (!direction)
 	{
 		Local->position = ending.Interpolate(Vector3(80, Global->position.y, 0), moveTimer2);
+	}
+	if (Local->position.x <= 80)
+	{
+		direction = true;
+		moveTimer2 = 0.01f;
+		Move();
+	}
+	else if (Local->position.x >= 1000)
+	{
+		direction = false;
+		moveTimer2 = 0.01f;
+		Move();
 	}
 }
