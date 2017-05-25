@@ -6,6 +6,7 @@ GameManager::GameManager()
 {
 	Player = new Object(Vector3(600, 50, 1), 3.14, new aie::Texture("./textures/ship.png"));
 	Alien1 = new Alien(Vector3(80, 700, 0), 0, new aie::Texture("./textures/car.png"), Vector3(80, 700, 0), Vector3(1000, 700, 0));
+	debugShit = new aie::Texture("./textures/laser.png");
 }
 
 
@@ -26,6 +27,7 @@ void GameManager::draw(aie::Renderer2D* a_renderer)
 {
 	Alien1->Draw(a_renderer);
 	Player->Draw(a_renderer);
+	a_renderer->drawSprite(debugShit, 250, 250, 50, 50, 0);
 }
 
 void GameManager::drawAABB(const aabb & aabb, aie::Renderer2D * renderer)
