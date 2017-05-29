@@ -31,6 +31,7 @@ Alien::~Alien()
 		delete mBullets[i];
 	}
 	delete collCheck;
+	delete Texture;
 }
 
 void Alien::Move()

@@ -20,6 +20,8 @@ void GameManager::update(float deltaTime)
 	BulletUpdate(deltaTime);
 	Alien1->Update(deltaTime);
 	Player->Update(deltaTime);
+	DidILose();
+	PlayerTakeDamage();
 }
 
 void GameManager::draw(aie::Renderer2D* a_renderer)
@@ -61,4 +63,17 @@ void GameManager::BulletUpdate(float deltaTime)
 			}
 		}
 	}
+}
+
+void GameManager::DidILose()
+{
+	if (Player->amIDead())
+	{
+		std::cout << "lost" << std::endl;
+	}
+}
+
+void GameManager::PlayerTakeDamage()
+{
+
 }

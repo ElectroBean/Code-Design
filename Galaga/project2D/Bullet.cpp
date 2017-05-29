@@ -15,6 +15,10 @@ Bullet::Bullet(const Vector3& a_pos, const float a_rotation, aie::Texture* const
 
 Bullet::~Bullet()
 {
+	delete Local;
+	delete Global;
+	//delete Texture;
+	delete collCheck;
 }
 
 void Bullet::update(float deltaTime)

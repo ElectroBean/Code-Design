@@ -26,6 +26,8 @@ public:
 
 	void drawAABB(aie::Renderer2D * renderer);
 
+	bool amIDead();
+
 	Matrix3*		Global = nullptr;
 	Bullet *mBullets[100];
 	aabb*	collCheck;

@@ -62,6 +62,7 @@ Object::~Object()
 		delete mBullets[i];
 	}
 	delete collCheck;
+	delete playerTexture;
 }
 
 void Object::Update(const float deltaTime)
@@ -177,6 +178,7 @@ void Object::ScreenWrap()
 
 void Object::takeDamage(int aDamage)
 {
+	fHealth -= aDamage;
 }
 
 void Object::ShootBullet()
@@ -203,4 +205,13 @@ void Object::drawAABB(aie::Renderer2D* renderer)
 	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y + collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y + collCheck->halfheight);
 	// BOTTOM
 	renderer->drawLine(collCheck->x - collCheck->halfwidth, collCheck->y - collCheck->halfheight, collCheck->x + collCheck->halfwidth, collCheck->y - collCheck->halfheight);
+}
+
+bool Object::amIDead()
+{
+	if (fHealth <= 0)
+	{
+		return true;
+	}
+	return false;
 }

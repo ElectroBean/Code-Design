@@ -20,6 +20,10 @@ public:
 
 	void BulletUpdate(float deltaTime);
 
+	void DidILose();
+
+	void PlayerTakeDamage();
+
 private:
 	Object* Player;
 	Alien*	Alien1;
