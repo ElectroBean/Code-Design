@@ -27,5 +27,7 @@ public:
 private:
 	Object* Player;
 	Alien*	Alien1;
+
+	aie::Texture* debugShit;
 };
 

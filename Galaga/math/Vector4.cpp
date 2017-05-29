@@ -71,7 +71,7 @@ void Vector4::Divide( float a_scalar)
 
 float Vector4::magnitude()
 {
-	return sqrt((x * x) + (y * y) + (z * z) + (w * w));
+	return (float)sqrt((x * x) + (y * y) + (z * z) + (w * w));
 }
 
 void Vector4::normalise()
@@ -106,24 +106,24 @@ const Vector4 & Vector4::cross(const Vector4 & a_second)
 
 void Vector4::setRotateXRad(float a_angle)
 {
-	float cosProduct = cos(a_angle);
-	float sinProduct = sin(a_angle);
+	float cosProduct = (float)cos(a_angle);
+	float sinProduct = (float)sin(a_angle);
 	y = y * cosProduct - z * sinProduct;
 	z = y * sinProduct + z * cosProduct;
 }
 
 void Vector4::setRotateYRad(float a_angle)
 {
-	float cosProduct = cos(a_angle);
-	float sinProduct = sin(a_angle);
+	float cosProduct = (float)cos(a_angle);
+	float sinProduct = (float)sin(a_angle);
 	x = x * cosProduct - z * sinProduct;
 	z = x * sinProduct + z * cosProduct;
 }
 
 void Vector4::setRotateZRad(float a_angle)
 {
-	float cosProduct = cos(a_angle);
-	float sinProduct = sin(a_angle);
+	float cosProduct = (float)cos(a_angle);
+	float sinProduct = (float)sin(a_angle);
 	x = x * cosProduct - y * sinProduct;
 	y = x * sinProduct + y * cosProduct;
 }

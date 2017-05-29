@@ -170,7 +170,7 @@ Vector3 Vector3::Interpolate(Vector3 rhs, float t)
 
 Vector3 Vector3::EaseLerp(Vector3 rhs, float t, float time)
 {
-	
+	return *this;
 }
 
 Vector3 operator*(const float a_fscale, const Vector3 & a_RHS)
