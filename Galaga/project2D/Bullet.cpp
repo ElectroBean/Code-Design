@@ -9,7 +9,7 @@ Bullet::Bullet(const Vector3& a_pos, const float a_rotation, aie::Texture* const
 	Local->setRotateZ(a_rotation);
 	Texture = a_texture;
 	Global = new Matrix3(*Local);
-	collCheck = new aabb(a_pos.x, a_pos.y, 32 / 2, 32 / 2);
+	collCheck = new aabb(a_pos.x, a_pos.y, 7 / 2, 32 / 2);
 	isVisible = false;
 }
 
@@ -23,13 +23,13 @@ Bullet::~Bullet()
 
 void Bullet::update(float deltaTime)
 {
-	if (this->isVisible)
-	{
 		*Global = *(Local);
+	if (isVisible)
+	{
+		Local->position.y += 1500.0f * deltaTime;
 		collCheck->x = Local->columns[2].x;
 		collCheck->y = Local->columns[2].y;
-		Local->columns[2].y += 1500.0f * deltaTime;
-		ScreenWrap();
+		//ScreenWrap();
 	}
 }
 
@@ -37,7 +37,8 @@ void Bullet::Draw(aie::Renderer2D * a_Render)
 {
 	if (isVisible)
 	{
-		a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 93 / 2, 80 / 2);
+		*Global = *Local;
+		a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 7, 32);
 		drawAABB(a_Render);
 	}
 }
@@ -50,12 +51,14 @@ void Bullet::SetRotation(const float a_rotation)
 void Bullet::setPosition(Vector3 position)
 {
 	Local->columns[2] = position;
+	collCheck->x = position.x;
+	collCheck->y = position.y;
 }
 
 void Bullet::SetSpeed(const float a_speed)
 {
 	fSpeed = a_speed;
-	//                    changed global to local to fix rotation of children
+	//changed global to local to fix rotation of children
 	V3Velocity = fSpeed * Local->columns[1];
 }
 

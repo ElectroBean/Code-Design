@@ -1,5 +1,5 @@
 #pragma once
-#include "Object.h"
+#include "Player.h"
 
 
 class Alien :
@@ -7,7 +7,7 @@ class Alien :
 {
 public:
 
-	Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture, Vector3 start, Vector3 end);
+	Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture);
 	~Alien();
 
 	void Move();
@@ -17,9 +17,13 @@ public:
 	void drawAABB(aie::Renderer2D * renderer);
 
 	void interpolate(float deltaTime);
+	void die();
+
+	void setMoveSpeed(float aMoveSpeed);
 
 	Matrix3*		Global = nullptr;
 	aabb*				collCheck;
+	bool isVisible;
 protected:
 	Object * parent = nullptr;
 	std::vector<Object>* children = nullptr;
@@ -32,6 +36,8 @@ protected:
 	Vector3 begin;
 	Vector3 ending;
 	float moveTimer2;
+	float movedDownTimer = 0.0f;
+	float moveDelay;
 
 	Vector3 V3Direction = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3 V3Velocity = Vector3(0.0f, 0.0f, 0.0f);

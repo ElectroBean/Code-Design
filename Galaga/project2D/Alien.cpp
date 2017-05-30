@@ -2,7 +2,7 @@
 
 
 
-Alien::Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture, Vector3 start, Vector3 end)
+Alien::Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture)
 {
 	Local = new Matrix3();
 	Local->setRotateZ(a_rotation);
@@ -16,9 +16,9 @@ Alien::Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a
 		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
 	}
 	collCheck = new aabb(Global->position.x, Global->position.y, 93 / 4, 80 / 4);
-	begin = start;
-	ending = end;
 	moveTimer2 = 0.1f;
+	isVisible = true;
+	moveDelay = 0.5f;
 }
 
 Alien::~Alien()
@@ -36,8 +36,19 @@ Alien::~Alien()
 
 void Alien::Move()
 {
-	Local->position.y -= 50;
-	std::cout << "it should've worked" << std::endl;
+	if (movedDownTimer >= 2.0f)
+	{
+		movedDownTimer = 0.0f;
+		Local->position.y -= 50;
+		if (direction)
+		{
+			direction = false;
+		}
+		else if (!direction)
+		{
+			direction = true;
+		}
+	}
 }
 
 void Alien::Update(float deltaTime)
@@ -47,6 +58,7 @@ void Alien::Update(float deltaTime)
 	collCheck->y = Global->position.y;
 	collCheck->x = Global->position.x;
 	moveTimer -= deltaTime;
+	movedDownTimer += deltaTime;
 }
 
 void Alien::Draw(aie::Renderer2D * a_Render)
@@ -69,28 +81,30 @@ void Alien::drawAABB(aie::Renderer2D* renderer)
 
 void Alien::interpolate(float deltaTime)
 {
-	moveTimer2 += 0.1f * deltaTime;
-	begin = Vector3(80, Local->position.y, 0);
-	ending = Vector3(1000, Local->position.y, 0);
+	moveTimer2 += 0.25f * deltaTime;
+	if (moveTimer2 >= moveDelay)
+	{
+		if (direction)
+		{
+			Local->position.x += 25.0f;
+			moveTimer2 = 0.0f;
+		}
+		else if (!direction)
+		{
+			Local->position.x -= 25.0f;
+			moveTimer2 = 0.0f;
+		}
+	}
+}
 
-	if (direction)
-	{
-		Local->position = begin.Interpolate(Vector3(1000, Global->position.y, 0), moveTimer2);
-	}
-	else if (!direction)
-	{
-		Local->position = ending.Interpolate(Vector3(80, Global->position.y, 0), moveTimer2);
-	}
-	if (Local->position.x <= 80)
-	{
-		direction = true;
-		moveTimer2 = 0.01f;
-		Move();
-	}
-	else if (Local->position.x >= 1000)
-	{
-		direction = false;
-		moveTimer2 = 0.01f;
-		Move();
-	}
+void Alien::die()
+{
+	isVisible = false;
+	collCheck->x = 0;
+	collCheck->y = 0;
+}
+
+void Alien::setMoveSpeed(float aMoveSpeed)
+{
+	moveDelay = aMoveSpeed;
 }

@@ -28,6 +28,7 @@ public:
 
 	bool amIDead();
 
+
 	Matrix3*		Global = nullptr;
 	Bullet *mBullets[100];
 	aabb*	collCheck;

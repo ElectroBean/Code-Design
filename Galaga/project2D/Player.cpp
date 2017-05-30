@@ -1,4 +1,4 @@
-#include "Object.h"
+#include "Player.h"
 
 
 Object::Object()
@@ -114,7 +114,7 @@ void Object::Update(const float deltaTime)
 	if (shooting && shootTimer <= 0)
 	{
 		ShootBullet();
-		shootTimer += 0.2f;
+		shootTimer += 0.5f;
 	}
 	if (shootTimer < 0)
 	{
@@ -187,11 +187,10 @@ void Object::ShootBullet()
 	{
 		if (!mBullets[i]->isVisible)
 		{
-			//mBullets[i]->SetRotation(rotation);
-			mBullets[i]->setPosition(Global->position);
+  			mBullets[i]->setPosition(this->Global->position);
 			mBullets[i]->isVisible = true;
 			return;
-		}
+		} 
 	}
 }
 
@@ -215,3 +214,5 @@ bool Object::amIDead()
 	}
 	return false;
 }
+
+

@@ -2,11 +2,14 @@
 #include "Application.h"
 #include "Renderer2D.h"
 #include "Audio.h"
-#include "Object.h"
+#include "Player.h"
 #include "aabb.h"
 #include "Alien.h"
 #include <iostream>
 #include <stdlib.h>
+#include <vector>
+
+using namespace std;
 
 class GameManager
 {
@@ -24,10 +27,14 @@ public:
 
 	void PlayerTakeDamage();
 
+	void AliensMoveDown();
+
+	void AlienSpeedUp();
+
 private:
 	Object* Player;
-	Alien*	Alien1;
 
-	aie::Texture* debugShit;
+	Alien* aliens[55];
+	std::vector<Bullet*> bullets;
 };
 
