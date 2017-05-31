@@ -29,7 +29,7 @@ void Bullet::update(float deltaTime)
 		Local->position.y += 1000.0f * deltaTime;
 		collCheck->x = Local->columns[2].x;
 		collCheck->y = Local->columns[2].y;
-		//ScreenWrap();
+		ScreenWrap();
 	}
 }
 
@@ -64,19 +64,7 @@ void Bullet::SetSpeed(const float a_speed)
 
 void Bullet::ScreenWrap()
 {
-	if (Local->columns[2].x > 1080)
-	{
-		isVisible = false;
-	}
-	if (Local->columns[2].x < 0)
-	{
-		isVisible = false;
-	}
 	if (Local->columns[2].y > 720)
-	{
-		isVisible = false;
-	}
-	if (Local->columns[2].y < 0)
 	{
 		isVisible = false;
 	}
