@@ -23,6 +23,7 @@ Object::Object()
 		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
 	}
 	collCheck = new aabb(Global->position.x, Global->position.y, 93 / 2, 80 / 2);
+	m_audio = new aie::Audio("./audio/shootiesound - dklon.wav");
 }
 
 Object::Object(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture)
@@ -49,6 +50,7 @@ Object::Object(const Vector3& a_pos, const float a_rotation, aie::Texture* const
 		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
 	}
 	collCheck = new aabb(Global->position.x, Global->position.y, 93 / 5, 80 / 5);
+	m_audio = new aie::Audio("./audio/shootiesound - dklon.wav");
 }
 
 
@@ -63,6 +65,7 @@ Object::~Object()
 	}
 	delete collCheck;
 	delete playerTexture;
+	delete m_audio;
 }
 
 void Object::Update(const float deltaTime)
@@ -185,10 +188,16 @@ void Object::ShootBullet()
 {
 	for (int i = 0; i < 100; i++)
 	{
+		if (mBullets[i]->isVisible)
+		{
+			break;
+		}
 		if (!mBullets[i]->isVisible)
 		{
   			mBullets[i]->setPosition(this->Global->position);
 			mBullets[i]->isVisible = true;
+			m_audio->setGain(0.3);
+			m_audio->play();
 			return;
 		} 
 	}

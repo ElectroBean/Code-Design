@@ -9,8 +9,7 @@ GameManager::GameManager()
 	{
 		for (int i = 0; i < 11; i++)
 		{
-			aliens[j * 11 + i] = new Alien(Vector3(80 * (i + 1), 720 - ((j + 1) * 80), 0), 0, new aie::Texture("./textures/car.png"));
-
+			aliens[j * 11 + i] = new Alien(Vector3(50 * (i + 1), 720 - ((j + 1) * 80), 0), 0, new aie::Texture("./textures/saucer1b.png"));
 		}
 	}
 	bullets.reserve(100);
@@ -18,6 +17,11 @@ GameManager::GameManager()
 	{
 		bullets.push_back((Player->mBullets[i]));
 	}
+
+	m_invaderKilled = new aie::Audio("./audio/invaderkilled.wav");
+	m_killed = new aie::Audio("./audio/explosion.wav");
+	m_Background = new aie::Texture(("./textures/background.png"));
+	backGroundPosition = Vector2(0, 0);
 }
 
 
@@ -28,34 +32,53 @@ GameManager::~GameManager()
 	{
 		delete aliens[i];
 	}
+	delete m_invaderKilled;
+	delete m_killed;
+	delete m_Background;
 }
 
 void GameManager::update(float deltaTime)
 {
-	Player->Update(deltaTime);
-	BulletUpdate(deltaTime);
-	for (int i = 0; i < 55; i++)
+	backGroundPosition.y -=  500.0f * deltaTime;
+	if (backGroundPosition.y <= -340)
 	{
-		if (aliens[i]->isVisible)
-		{
-			aliens[i]->Update(deltaTime);
-		}
+		backGroundPosition.y = 1100;
 	}
-	DidILose();
-	PlayerTakeDamage();
-	AliensMoveDown();
-	AlienSpeedUp();
+	if (!gameOver)
+	{
+		Player->Update(deltaTime);
+		BulletUpdate(deltaTime);
+		for (int i = 0; i < 55; i++)
+		{
+			if (aliens[i]->isVisible)
+			{
+				aliens[i]->Update(deltaTime);
+			}
+		}
+		DidILose();
+		PlayerTakeDamage();
+		AliensMoveDown();
+		AlienSpeedUp();
+	}
 }
 
 void GameManager::draw(aie::Renderer2D* a_renderer)
 {
-	Player->Draw(a_renderer);
-	for (int i = 0; i < 55; i++)
+	a_renderer->drawSprite(m_Background, 800/2, backGroundPosition.y, 800, 2160);
+	if (!gameOver)
 	{
-		if (aliens[i]->isVisible)
-			aliens[i]->Draw(a_renderer);
-	}
 
+		Player->Draw(a_renderer);
+		for (int i = 0; i < 55; i++)
+		{
+			if (aliens[i]->isVisible)
+				aliens[i]->Draw(a_renderer);
+		}
+	}
+	else
+	{
+
+	}
 }
 
 void GameManager::drawAABB(const aabb & aabb, aie::Renderer2D * renderer)
@@ -85,6 +108,8 @@ void GameManager::BulletUpdate(float deltaTime)
 						bullets[i]->isVisible = false;
 						bullets[i]->setPosition(Vector3(0, 0, 1));
 						aliens[j]->die();
+						m_invaderKilled->setGain(0.1);
+						m_invaderKilled->play();
 						std::cout << "collision" << std::endl;
 					}
 				}
@@ -98,6 +123,9 @@ void GameManager::DidILose()
 	if (Player->amIDead())
 	{
 		std::cout << "lost" << std::endl;
+		m_killed->setGain(0.5);
+		m_killed->play();
+		gameOver = true;
 	}
 }
 
@@ -121,14 +149,14 @@ void GameManager::AliensMoveDown()
 	{
 		if (aliens[i]->isVisible)
 		{
-			if (aliens[i]->Global->position.x >= 1000)
+			if (aliens[i]->Global->position.x >= 770)
 			{
 				for (int j = 0; j < 55; j++)
 				{
 					aliens[j]->Move();
 				}
 			}
-			if (aliens[i]->Global->position.x <= 80)
+			if (aliens[i]->Global->position.x <= 30)
 			{
 				for (int j = 0; j < 55; j++)
 				{
@@ -154,28 +182,28 @@ void GameManager::AlienSpeedUp()
 	{
 		for (int i = 0; i < 55; i++)
 		{
-			aliens[i]->setMoveSpeed(0.4f);
+			aliens[i]->setMoveSpeed(0.25f);
 		}
 	}
 	else if (numberAlive <= 33 && numberAlive > 22)
 	{
 		for (int i = 0; i < 55; i++)
 		{
-			aliens[i]->setMoveSpeed(0.3f);
+			aliens[i]->setMoveSpeed(0.2f);
 		}
 	}
 	else if (numberAlive <= 22 && numberAlive > 11)
 	{
 		for (int i = 0; i < 55; i++)
 		{
-			aliens[i]->setMoveSpeed(0.2f);
+			aliens[i]->setMoveSpeed(0.1f);
 		}
 	}
 	else if (numberAlive <= 11 && numberAlive > 1)
 	{
 		for (int i = 0; i < 55; i++)
 		{
-			aliens[i]->setMoveSpeed(0.1f);
+			aliens[i]->setMoveSpeed(0.05f);
 		}
 	}
 	else if (numberAlive <= 1)

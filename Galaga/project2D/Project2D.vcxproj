@@ -98,6 +98,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="DefenseItem.cpp" />
     <ClCompile Include="Defenses.cpp" />
+    <ClCompile Include="extraAlien.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="DefenseItem.h" />
     <ClInclude Include="Defenses.h" />
+    <ClInclude Include="extraAlien.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>

@@ -26,7 +26,7 @@ void Bullet::update(float deltaTime)
 		*Global = *(Local);
 	if (isVisible)
 	{
-		Local->position.y += 1500.0f * deltaTime;
+		Local->position.y += 1000.0f * deltaTime;
 		collCheck->x = Local->columns[2].x;
 		collCheck->y = Local->columns[2].y;
 		//ScreenWrap();

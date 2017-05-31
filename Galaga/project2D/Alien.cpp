@@ -1,6 +1,9 @@
 #include "Alien.h"
 
+Alien::Alien()
+{
 
+}
 
 Alien::Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture)
 {
@@ -15,10 +18,10 @@ Alien::Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a
 	{
 		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
 	}
-	collCheck = new aabb(Global->position.x, Global->position.y, 93 / 4, 80 / 4);
+	collCheck = new aabb(Global->position.x, Global->position.y, 32/2, 32/2);
 	moveTimer2 = 0.1f;
 	isVisible = true;
-	moveDelay = 0.5f;
+	moveDelay = 0.35f;
 }
 
 Alien::~Alien()
@@ -36,7 +39,7 @@ Alien::~Alien()
 
 void Alien::Move()
 {
-	if (movedDownTimer >= 2.0f)
+	if (movedDownTimer >= 1.0f)
 	{
 		movedDownTimer = 0.0f;
 		Local->position.y -= 50;
@@ -63,7 +66,7 @@ void Alien::Update(float deltaTime)
 
 void Alien::Draw(aie::Renderer2D * a_Render)
 {
-	a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 93 / 2, 80 / 2);
+	a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 32, 32);
 	drawAABB(a_Render);
 }
 

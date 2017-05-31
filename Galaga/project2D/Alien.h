@@ -7,6 +7,8 @@ class Alien :
 {
 public:
 
+	Alien();
+
 	Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture);
 	~Alien();
 

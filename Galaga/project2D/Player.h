@@ -7,6 +7,7 @@
 #include <Texture.h>
 #include <vector>
 #include <Input.h>
+#include "Audio.h"
  
 class Object
 {
@@ -42,6 +43,7 @@ protected:
 	float shootTimer = 0.0f;
 	bool shooting = false;
 	aie::Texture*		m_bullet;
+	aie::Audio*			m_audio;
 
 	Vector3 V3Direction = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3 V3Velocity = Vector3(0.0f, 0.0f, 0.0f);

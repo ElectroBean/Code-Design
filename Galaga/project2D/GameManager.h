@@ -33,8 +33,14 @@ public:
 
 private:
 	Object* Player;
+	aie::Audio* m_invaderKilled;
+	aie::Audio* m_killed;
+	bool gameOver = false;
+	aie::Texture* m_Background;
+	Vector2 backGroundPosition;
 
 	Alien* aliens[55];
+	Alien* randomAlien;
 	std::vector<Bullet*> bullets;
 };
 
