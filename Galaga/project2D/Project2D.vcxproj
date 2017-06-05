@@ -100,7 +100,10 @@
     <ClCompile Include="Defenses.cpp" />
     <ClCompile Include="extraAlien.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameOverScreen.cpp" />
+    <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +114,9 @@
     <ClInclude Include="Defenses.h" />
     <ClInclude Include="extraAlien.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameOverScreen.h" />
+    <ClInclude Include="GameStateManager.h" />
+    <ClInclude Include="MenuState.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

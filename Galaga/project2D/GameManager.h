@@ -10,11 +10,12 @@
 #include <vector>
 
 using namespace std;
+class GameStateManager;
 
 class GameManager
 {
 public:
-	GameManager();
+	GameManager(GameStateManager* a_gameState);
 	~GameManager();
 
 	virtual void update(float deltaTime);
@@ -38,6 +39,7 @@ private:
 	bool gameOver = false;
 	aie::Texture* m_Background;
 	Vector2 backGroundPosition;
+	GameStateManager* GameState;
 
 	Alien* aliens[55];
 	Alien* randomAlien;

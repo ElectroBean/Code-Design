@@ -15,21 +15,20 @@ public:
 	Object();
 	Object(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture);
 	virtual ~Object();// = 0 {};
-	virtual void Update(const float deltaTime);
-	void Draw(aie::Renderer2D* a_Render);
-	void SetSpeed(const float a_speed);
-	void SetRotation(const float a_rotation);
-	void SetParent(Object* a_parent);
-	void ScreenWrap();
+	virtual void Update(const float deltaTime);		//updates player
+	void Draw(aie::Renderer2D* a_Render);			//draws player	
+	void SetRotation(const float a_rotation);		//sets the rotation of player
+	void SetParent(Object* a_parent);				//sets a parent
+	void ScreenWrap();								//keeps player within game bounds
+	void takeDamage(int aDamage);					//removes health from player
+	void ShootBullet();								//fires a bullet
+
+	void drawAABB(aie::Renderer2D * renderer);		//draws collision box
+
+	bool amIDead();									//returns true if player is at or below 0 health
+
+
 	float rotation = 0.0f;
-	void takeDamage(int aDamage);
-	void ShootBullet();
-
-	void drawAABB(aie::Renderer2D * renderer);
-
-	bool amIDead();
-
-
 	Matrix3*		Global = nullptr;
 	Bullet *mBullets[100];
 	aabb*	collCheck;

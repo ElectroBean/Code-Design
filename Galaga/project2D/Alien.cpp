@@ -39,7 +39,7 @@ Alien::~Alien()
 
 void Alien::Move()
 {
-	if (movedDownTimer >= 1.0f)
+	if (movedDownTimer >= 1.5f)
 	{
 		movedDownTimer = 0.0f;
 		Local->position.y -= 50;
@@ -67,7 +67,7 @@ void Alien::Update(float deltaTime)
 void Alien::Draw(aie::Renderer2D * a_Render)
 {
 	a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 32, 32);
-	drawAABB(a_Render);
+	//drawAABB(a_Render);
 }
 
 void Alien::drawAABB(aie::Renderer2D* renderer)

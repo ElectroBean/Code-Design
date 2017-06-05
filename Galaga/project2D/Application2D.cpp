@@ -21,7 +21,7 @@ bool Application2D::startup() {
 	m_cameraY = 0;
 	m_timer = 0;
 
-	m_gameManager = new GameManager();
+	m_gameStateManager = new GameStateManager();
 
 	return true;
 }
@@ -30,7 +30,7 @@ void Application2D::shutdown()
 {
 	delete m_font;
 	delete m_2dRenderer;
-	delete m_gameManager;
+	delete m_gameStateManager;
 }
 
 void Application2D::update(float deltaTime) {
@@ -39,7 +39,7 @@ void Application2D::update(float deltaTime) {
 
 	// input example
 	aie::Input* input = aie::Input::getInstance();
-	m_gameManager->update(deltaTime);
+	m_gameStateManager->update(deltaTime);
 
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
@@ -56,7 +56,7 @@ void Application2D::draw() {
 	// begin drawing sprites
 	m_2dRenderer->begin();
 
-	m_gameManager->draw(m_2dRenderer);
+	m_gameStateManager->draw(m_2dRenderer);
 
 	// output some text, uses the last used colour
 	char fps[32];

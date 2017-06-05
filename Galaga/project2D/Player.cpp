@@ -71,6 +71,10 @@ Object::~Object()
 void Object::Update(const float deltaTime)
 {
 	shootTimer -= deltaTime;
+	/*
+	goes through bullet array
+	updates all that are visible
+	*/
 	for (int i = 0; i < 100; i++)
 	{
 		if (mBullets[i]->isVisible)
@@ -84,36 +88,31 @@ void Object::Update(const float deltaTime)
 	}
 
 	aie::Input* input = aie::Input::getInstance();
-	if (!parent)
+
+	ScreenWrap();
+
+
+
+	*Global = *(Local);
+	SetRotation(rotation);
+
+	if (input->isKeyDown(aie::INPUT_KEY_LEFT))
 	{
-		ScreenWrap();
+		Local->columns[2].x -= (500.0f * deltaTime);
+	}
+	if (input->isKeyDown(aie::INPUT_KEY_RIGHT))
+	{
+		Local->columns[2].x += (500.0f * deltaTime);
+	}
+	if (input->isKeyDown(aie::INPUT_KEY_SPACE))
+	{
+		shooting = true;
+	}
+	if (input->isKeyUp(aie::INPUT_KEY_SPACE))
+	{
+		shooting = false;
 	}
 
-	if (!parent)
-	{
-		Local->columns[2] = Local->columns[2] + (V3Velocity * deltaTime);
-		*Global = *(Local);
-
-		SetRotation(rotation);
-		SetSpeed(fSpeed); 
-
-		if (input->isKeyDown(aie::INPUT_KEY_LEFT))
-		{
-			Local->columns[2].x -= (500.0f * deltaTime);
-		}
-		if (input->isKeyDown(aie::INPUT_KEY_RIGHT))
-		{
-			Local->columns[2].x += (500.0f * deltaTime);
-		}
-		if (input->isKeyDown(aie::INPUT_KEY_SPACE))
-		{
-			shooting = true;
-		}
-		if (input->isKeyUp(aie::INPUT_KEY_SPACE))
-		{
-			shooting = false;
-		}
-	}
 	if (shooting && shootTimer <= 0)
 	{
 		ShootBullet();
@@ -123,13 +122,19 @@ void Object::Update(const float deltaTime)
 	{
 		shootTimer = 0;
 	}
+
+	// Updates collision box position/////
 	collCheck->x = Global->position.x;
 	collCheck->y = Global->position.y;
+	//////////////////////////////////////
 }
 
 void Object::Draw(aie::Renderer2D * a_Render)
 {
-	drawAABB(a_Render);
+	/*
+	goes through bullet array
+	checks for visible bullets and draws them
+	*/
 	for (int i = 0; i < 100; i++)
 	{
 		if (mBullets[i]->isVisible)
@@ -138,14 +143,10 @@ void Object::Draw(aie::Renderer2D * a_Render)
 		}
 	}
 	a_Render->drawSpriteTransformed3x3(playerTexture, (float*)Global, 93 / 2, 80 / 2);
+	//a_Render->drawLine(Local->position.x, Local->position.y, Local->position.x, 720, 1);
 }
 
-void Object::SetSpeed(const float a_speed)
-{
-	fSpeed = a_speed;
-	//                    changed global to local to fix rotation of children
-	V3Velocity = fSpeed * Local->columns[1];
-}
+
 
 void Object::SetRotation(const float a_rotation)
 {
@@ -159,23 +160,16 @@ void Object::SetParent(Object * a_parent)
 	Local->columns[1] = a_parent->Global->columns[1];
 }
 
+//clamps the players position to stay inside the screen width
 void Object::ScreenWrap()
 {
-	if (Local->columns[2].x > 1280)
+	if (Local->position.x >= 800)
 	{
-		Local->columns[2].x = 0;
+		Local->position.x = 799;
 	}
-	if (Local->columns[2].x < 0)
+	if (Local->position.x <= 0)
 	{
-		Local->columns[2].x = 1280;
-	}
-	if (Local->columns[2].y > 720)
-	{
-		Local->columns[2].y = 0;
-	}
-	if (Local->columns[2].y < 0)
-	{
-		Local->columns[2].y = 720;
+		Local->position.x = 1;
 	}
 }
 
@@ -188,18 +182,27 @@ void Object::ShootBullet()
 {
 	for (int i = 0; i < 100; i++)
 	{
+		/*
+		if there is already a bullet visible
+		breaks out of for loop so another isn't shot
+		*/
 		if (mBullets[i]->isVisible)
 		{
 			break;
 		}
 		if (!mBullets[i]->isVisible)
 		{
-  			mBullets[i]->setPosition(this->Global->position);
+			/*
+			sets the first bullet that is invisible to visible
+			sets its position to the players position
+			plays shooting audio
+			*/
+			mBullets[i]->setPosition(this->Global->position);
 			mBullets[i]->isVisible = true;
 			m_audio->setGain(0.3);
 			m_audio->play();
 			return;
-		} 
+		}
 	}
 }
 

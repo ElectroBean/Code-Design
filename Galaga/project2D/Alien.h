@@ -12,16 +12,16 @@ public:
 	Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture);
 	~Alien();
 
-	void Move();
-	void Update(float deltaTime);
-	void Draw(aie::Renderer2D * a_Render);
+	void Move();								//moves aliens down if one in array is at screen bound
+	void Update(float deltaTime);				//updates aliens
+	void Draw(aie::Renderer2D * a_Render);		//draws aliens
 
-	void drawAABB(aie::Renderer2D * renderer);
+	void drawAABB(aie::Renderer2D * renderer);	//draws alien collisions
 
-	void interpolate(float deltaTime);
+	void interpolate(float deltaTime);			//moves aliens across the screen
 	void die();
 
-	void setMoveSpeed(float aMoveSpeed);
+	void setMoveSpeed(float aMoveSpeed);		//changes movement delay
 
 	Matrix3*		Global = nullptr;
 	aabb*				collCheck;

@@ -1,8 +1,8 @@
 #include "GameManager.h"
 
+#include "GameStateManager.h"
 
-
-GameManager::GameManager()
+GameManager::GameManager(GameStateManager* a_gameState)
 {
 	Player = new Object(Vector3(600, 50, 1), 3.14, new aie::Texture("./textures/ship.png"));
 	for (int j = 0; j < 5; j++)
@@ -22,6 +22,7 @@ GameManager::GameManager()
 	m_killed = new aie::Audio("./audio/explosion.wav");
 	m_Background = new aie::Texture(("./textures/background.png"));
 	backGroundPosition = Vector2(0, 0);
+	GameState = a_gameState;
 }
 
 
@@ -126,6 +127,7 @@ void GameManager::DidILose()
 		m_killed->setGain(0.5);
 		m_killed->play();
 		gameOver = true;
+		GameState->setState(GameState->GameOver);
 	}
 }
 

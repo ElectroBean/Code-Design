@@ -39,7 +39,7 @@ void Bullet::Draw(aie::Renderer2D * a_Render)
 	{
 		*Global = *Local;
 		a_Render->drawSpriteTransformed3x3(Texture, (float*)Global, 7, 32);
-		drawAABB(a_Render);
+		//drawAABB(a_Render);
 	}
 }
 

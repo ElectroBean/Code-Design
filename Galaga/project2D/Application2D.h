@@ -4,6 +4,7 @@
 #include "Renderer2D.h"
 #include "Audio.h"
 #include "GameManager.h"
+#include "GameStateManager.h"
 
 class Application2D : public aie::Application {
 public:
@@ -22,7 +23,7 @@ protected:
 	aie::Renderer2D*	m_2dRenderer;
 	aie::Font*			m_font;
 	aie::Audio*			m_audio;
-	GameManager*		m_gameManager;
+	GameStateManager*	m_gameStateManager;
 
 	float m_cameraX, m_cameraY;
 	float m_timer;
