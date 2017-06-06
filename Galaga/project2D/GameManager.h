@@ -8,6 +8,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
+#include "extraAlien.h"
 
 using namespace std;
 class GameStateManager;
@@ -32,6 +33,8 @@ public:
 
 	void AlienSpeedUp();
 
+	void CheckWon();
+
 private:
 	Object* Player;
 	aie::Audio* m_invaderKilled;
@@ -40,9 +43,12 @@ private:
 	aie::Texture* m_Background;
 	Vector2 backGroundPosition;
 	GameStateManager* GameState;
+	bool won = false;
 
 	Alien* aliens[55];
 	Alien* randomAlien;
+	extraAlien* alienMegaPrime;
+
 	std::vector<Bullet*> bullets;
 };
 

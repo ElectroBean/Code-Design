@@ -63,6 +63,12 @@
     <ClCompile Include="MenuState.cpp">
       <Filter>Source Files\GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="Controls.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="WinScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application2D.h">
@@ -97,6 +103,12 @@
     </ClInclude>
     <ClInclude Include="MenuState.h">
       <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="WinScreen.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

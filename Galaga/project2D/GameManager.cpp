@@ -23,6 +23,7 @@ GameManager::GameManager(GameStateManager* a_gameState)
 	m_Background = new aie::Texture(("./textures/background.png"));
 	backGroundPosition = Vector2(0, 0);
 	GameState = a_gameState;
+	alienMegaPrime = new extraAlien(Vector3(60, 700, 0));
 }
 
 
@@ -36,11 +37,12 @@ GameManager::~GameManager()
 	delete m_invaderKilled;
 	delete m_killed;
 	delete m_Background;
+	delete alienMegaPrime;
 }
 
 void GameManager::update(float deltaTime)
 {
-	backGroundPosition.y -=  500.0f * deltaTime;
+	backGroundPosition.y -= 500.0f * deltaTime;
 	if (backGroundPosition.y <= -340)
 	{
 		backGroundPosition.y = 1100;
@@ -60,16 +62,42 @@ void GameManager::update(float deltaTime)
 		PlayerTakeDamage();
 		AliensMoveDown();
 		AlienSpeedUp();
+		CheckWon();
+
+		//checks for escape input and goes to menu if true
+		aie::Input* input = aie::Input::getInstance();
+		if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
+		{
+			GameState->setState(GameState->Menu);
+		}
+		if (input->wasKeyPressed(aie::INPUT_KEY_Y))
+		{
+			for (int i = 0; i < 55; i++)
+			{
+				if (aliens[i]->isVisible)
+				{
+					aliens[i]->isVisible = false;
+				}
+			}
+		}
+	}
+
+	alienMegaPrime->Update(deltaTime);
+
+	if (won)
+	{
+		GameState->setState(GameState->Won);
 	}
 }
 
 void GameManager::draw(aie::Renderer2D* a_renderer)
 {
-	a_renderer->drawSprite(m_Background, 800/2, backGroundPosition.y, 800, 2160);
+	a_renderer->drawSprite(m_Background, 800 / 2, backGroundPosition.y, 800, 2160);
 	if (!gameOver)
 	{
 
 		Player->Draw(a_renderer);
+		alienMegaPrime->draw(a_renderer);
 		for (int i = 0; i < 55; i++)
 		{
 			if (aliens[i]->isVisible)
@@ -111,7 +139,6 @@ void GameManager::BulletUpdate(float deltaTime)
 						aliens[j]->die();
 						m_invaderKilled->setGain(0.1);
 						m_invaderKilled->play();
-						std::cout << "collision" << std::endl;
 					}
 				}
 			}
@@ -216,4 +243,22 @@ void GameManager::AlienSpeedUp()
 		}
 	}
 
+}
+
+void GameManager::CheckWon()
+{
+	int alienDeathCount = 0;
+
+	for (int i = 0; i < 55; i++)
+	{
+		if (!aliens[i]->isVisible)
+		{
+			alienDeathCount++;
+		}
+	}
+
+	if (alienDeathCount == 55)
+	{
+		won = true;
+	}
 }

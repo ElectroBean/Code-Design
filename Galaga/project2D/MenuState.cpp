@@ -23,39 +23,49 @@ void MenuState::update(float deltaTime)
 	{
 	case Choice::Play:
 	{
-		if (input->isKeyDown(aie::INPUT_KEY_ENTER))
+
+		if (input->wasKeyPressed(aie::INPUT_KEY_ENTER))
 		{
 			state->setState(state->Playing);
 		}
-		else if (input->isKeyDown(aie::INPUT_KEY_DOWN))
+		else if (input->wasKeyPressed(aie::INPUT_KEY_DOWN))
 		{
 			currentChoice = KeyBindings;
+
 		}
 		break;
 
 	}
 	case Choice::KeyBindings:
 	{
-		if (input->isKeyDown(aie::INPUT_KEY_ENTER))
+		
+		if (input->wasKeyPressed(aie::INPUT_KEY_ENTER))
 		{
-			state->setState(state->Controls);
+			state->setState(state->Control);
 		}
-		else if (input->isKeyDown(aie::INPUT_KEY_UP))
+		else if (input->wasKeyPressed(aie::INPUT_KEY_UP))
 		{
 			currentChoice = Play;
+
 		}
-		else if (input->isKeyDown(aie::INPUT_KEY_DOWN))
+		else if (input->wasKeyPressed(aie::INPUT_KEY_DOWN))
 		{
 			currentChoice = Quit;
+
 		}
 		break;
 
 	}
 	case Choice::Quit:
 	{
-		if (input->isKeyDown(aie::INPUT_KEY_ENTER))
+		if (input->wasKeyPressed(aie::INPUT_KEY_ENTER))
 		{
-			
+			state->setState(state->Quit);
+		}
+		else if (input->wasKeyPressed(aie::INPUT_KEY_UP))
+		{
+			currentChoice = KeyBindings;
+
 		}
 		break;
 
@@ -76,13 +86,13 @@ void MenuState::draw(aie::Renderer2D* renderer)
 	}
 	case Choice::KeyBindings:
 	{
-		renderer->drawLine(310, 250, 500, 250);
+		renderer->drawLine(310, 225, 500, 225);
 		break;
 
 	}
 	case Choice::Quit:
 	{
-		renderer->drawLine(310, 320, 500, 320);
+		renderer->drawLine(310, 100, 500, 100);
 		break;
 
 	}

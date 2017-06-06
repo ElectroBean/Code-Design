@@ -18,10 +18,19 @@ Alien::Alien(const Vector3& a_pos, const float a_rotation, aie::Texture* const a
 	{
 		mBullets[i] = new Bullet(Vector3(), 0, m_bullet);
 	}
-	collCheck = new aabb(Global->position.x, Global->position.y, 32/2, 32/2);
+	collCheck = new aabb(Global->position.x, Global->position.y, 32 / 2, 32 / 2);
 	moveTimer2 = 0.1f;
 	isVisible = true;
 	moveDelay = 0.35f;
+	sound1 = new aie::Audio("./audio/fastinvader3.wav");
+	sound1->setGain(0.05f);
+	sound2 = new aie::Audio("./audio/fastinvader2.wav");
+	sound2->setGain(0.05f);
+	sound3 = new aie::Audio("./audio/fastinvader1.wav");
+	sound3->setGain(0.05f);
+	sound4 = new aie::Audio("./audio/fastinvader4.wav");
+	sound4->setGain(0.05f);
+	moveNumber = 4;
 }
 
 Alien::~Alien()
@@ -35,6 +44,10 @@ Alien::~Alien()
 	}
 	delete collCheck;
 	delete Texture;
+	delete sound1;
+	delete sound2;
+	delete sound3;
+	delete sound4;
 }
 
 void Alien::Move()
@@ -91,11 +104,72 @@ void Alien::interpolate(float deltaTime)
 		{
 			Local->position.x += 25.0f;
 			moveTimer2 = 0.0f;
+			if (isVisible)
+			{
+				switch (moveNumber)
+				{
+				case 1:
+				{
+					sound1->play();
+					moveNumber = 4;
+					break;
+				}
+				case 2:
+				{
+					sound2->play();
+					moveNumber--;
+					break;
+				}
+				case 3:
+				{
+					sound3->play();
+					moveNumber--;
+					break;
+				}
+				case 4:
+				{
+					sound4->play();
+					moveNumber--;
+					break;
+				}
+				}
+			}
 		}
 		else if (!direction)
 		{
 			Local->position.x -= 25.0f;
 			moveTimer2 = 0.0f;
+			if (isVisible)
+			{
+				switch (moveNumber)
+				{
+				case 1:
+				{
+					sound1->play();
+					moveNumber = 4;
+					break;
+				}
+				case 2:
+				{
+					sound2->play();
+					moveNumber--;
+					break;
+				}
+				case 3:
+				{
+					sound3->play();
+					moveNumber--;
+					break;
+				}
+				case 4:
+				{
+					sound4->play();
+					moveNumber--;
+					break;
+				}
+				}
+
+			}
 		}
 	}
 }

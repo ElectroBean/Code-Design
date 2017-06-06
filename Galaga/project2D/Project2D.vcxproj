@@ -96,6 +96,7 @@
     <ClCompile Include="Alien.cpp" />
     <ClCompile Include="Application2D.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Controls.cpp" />
     <ClCompile Include="DefenseItem.cpp" />
     <ClCompile Include="Defenses.cpp" />
     <ClCompile Include="extraAlien.cpp" />
@@ -105,11 +106,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="WinScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Alien.h" />
     <ClInclude Include="Application2D.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Controls.h" />
     <ClInclude Include="DefenseItem.h" />
     <ClInclude Include="Defenses.h" />
     <ClInclude Include="extraAlien.h" />
@@ -118,6 +121,7 @@
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="WinScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

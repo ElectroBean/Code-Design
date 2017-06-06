@@ -21,7 +21,7 @@ bool Application2D::startup() {
 	m_cameraY = 0;
 	m_timer = 0;
 
-	m_gameStateManager = new GameStateManager();
+	m_gameStateManager = new GameStateManager(this);
 
 	return true;
 }
@@ -42,8 +42,8 @@ void Application2D::update(float deltaTime) {
 	m_gameStateManager->update(deltaTime);
 
 	// exit the application
-	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
-		quit();
+	//if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
+	//	quit();
 }
 
 void Application2D::draw() {

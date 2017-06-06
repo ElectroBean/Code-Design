@@ -4,20 +4,25 @@
 class GameManager;
 class GameOverScreen;
 class MenuState;
+class Application2D;
+class Controls;
+class WinScreen;
 
 class GameStateManager
 {
 public:
-	GameStateManager();
+	GameStateManager(Application2D* application);
 	~GameStateManager();
 
 	enum State
 	{
 		Splash,
 		Menu, 
-		Controls,
+		Control,
 		Playing, 
 		GameOver,
+		Quit,
+		Won,
 	};
 
 	void update(float deltaTime);				//updates current game state
@@ -29,6 +34,8 @@ private:
 	GameOverScreen*	 gameOverScreen;
 	MenuState* menuScreen;
 	State GameState;	
-	
+	Application2D* application;
+	Controls* controlsScreen;
+	WinScreen* won;
 };
 

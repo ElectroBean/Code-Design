@@ -2,14 +2,20 @@
 #include "GameManager.h"
 #include "GameOverScreen.h"
 #include "MenuState.h"
+#include "Application2D.h"
+#include "Controls.h"
+#include "WinScreen.h"
 
 
-GameStateManager::GameStateManager()
+GameStateManager::GameStateManager(Application2D* application)
 {
 	worldManager = new GameManager(this);
 	gameOverScreen = new GameOverScreen(this);
 	menuScreen = new MenuState(this);
 	GameState = State::Menu;
+	this->application = application;
+	controlsScreen = new Controls(this);
+	won = new WinScreen(this);
 }
 
 
@@ -18,11 +24,13 @@ GameStateManager::~GameStateManager()
 	delete worldManager;
 	delete gameOverScreen;
 	delete menuScreen;
+	delete controlsScreen;
+	delete won;
 }
 
 void GameStateManager::update(float deltaTime)
 {
-	std::cout << GameState << std::endl;
+	aie::Input* input = aie::Input::getInstance();
 	switch (GameState)
 	{
 	case State::Splash:
@@ -35,6 +43,11 @@ void GameStateManager::update(float deltaTime)
 		menuScreen->update(deltaTime);
 		break;
 	}
+	case State::Control:
+	{
+		controlsScreen->update(deltaTime);
+		break;
+	}
 	case State::Playing:
 	{
 		worldManager->update(deltaTime);
@@ -43,6 +56,16 @@ void GameStateManager::update(float deltaTime)
 	case State::GameOver:
 	{
 		gameOverScreen->update(deltaTime);
+		break;
+	}
+	case State::Quit:
+	{
+		application->quit();
+		break;
+	}
+	case State::Won:
+	{
+		won->update(deltaTime);
 		break;
 	}
 	}
@@ -62,6 +85,11 @@ void GameStateManager::draw(aie::Renderer2D * renderer)
 		menuScreen->draw(renderer);
 		break;
 	}
+	case State::Control:
+	{
+		controlsScreen->draw(renderer);
+		break;
+	}
 	case State::Playing:
 	{
 		worldManager->draw(renderer);
@@ -70,6 +98,11 @@ void GameStateManager::draw(aie::Renderer2D * renderer)
 	case State::GameOver:
 	{
 		gameOverScreen->draw(renderer);
+		break;
+	}
+	case State::Won:
+	{
+		won->draw(renderer);
 		break;
 	}
 	}

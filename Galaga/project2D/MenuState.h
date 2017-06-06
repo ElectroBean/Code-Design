@@ -26,5 +26,6 @@ private:
 	Choice currentChoice;
 	GameStateManager* state;
 	aie::Texture* menuTexture;
+	bool canChoose = false;
 };
 

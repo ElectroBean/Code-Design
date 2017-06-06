@@ -163,13 +163,13 @@ void Object::SetParent(Object * a_parent)
 //clamps the players position to stay inside the screen width
 void Object::ScreenWrap()
 {
-	if (Local->position.x >= 800)
+	if (Local->position.x >= 780)
 	{
-		Local->position.x = 799;
+		Local->position.x = 779;
 	}
-	if (Local->position.x <= 0)
+	if (Local->position.x <= 20)
 	{
-		Local->position.x = 1;
+		Local->position.x = 21;
 	}
 }
 

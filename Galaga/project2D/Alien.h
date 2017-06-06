@@ -41,6 +41,12 @@ protected:
 	float movedDownTimer = 0.0f;
 	float moveDelay;
 
+	aie::Audio* sound1;
+	aie::Audio* sound2;
+	aie::Audio* sound3;
+	aie::Audio* sound4;
+	int moveNumber;
+
 	Vector3 V3Direction = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3 V3Velocity = Vector3(0.0f, 0.0f, 0.0f);
 };

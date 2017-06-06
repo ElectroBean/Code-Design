@@ -26,6 +26,6 @@ void GameOverScreen::update(float deltaTime)
 
 	if (input->isKeyDown(aie::INPUT_KEY_ENTER))
 	{
-		state->setState(state->Menu);
+		state->setState(state->Quit);
 	}
 }
