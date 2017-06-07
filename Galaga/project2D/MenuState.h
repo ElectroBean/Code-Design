@@ -5,11 +5,12 @@
 #include <Texture.h>
 
 class GameStateManager;
+class GameManager;
 
 class MenuState
 {
 public:
-	MenuState(GameStateManager* a_state);
+	MenuState(GameStateManager* a_state, GameManager* a_game);
 	~MenuState();
 
 	enum Choice
@@ -27,5 +28,6 @@ private:
 	GameStateManager* state;
 	aie::Texture* menuTexture;
 	bool canChoose = false;
+	GameManager* worldManager;
 };
 

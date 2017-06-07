@@ -1,12 +1,13 @@
 #include "MenuState.h"
 #include "GameStateManager.h"
+#include "GameManager.h"
 
-
-MenuState::MenuState(GameStateManager* a_state)
+MenuState::MenuState(GameStateManager* a_state, GameManager* a_game)
 {
 	currentChoice = Play;
 	state = a_state;
 	menuTexture = new aie::Texture("./textures/menuscreen.png");
+	worldManager = a_game;
 }
 
 
@@ -26,7 +27,14 @@ void MenuState::update(float deltaTime)
 
 		if (input->wasKeyPressed(aie::INPUT_KEY_ENTER))
 		{
-			state->setState(state->Playing);
+			if (!worldManager->gameIsOver)
+				state->setState(state->Playing);
+
+			else
+			{
+				worldManager->ResetPositions();
+				state->setState(state->Playing);
+			}
 		}
 		else if (input->wasKeyPressed(aie::INPUT_KEY_DOWN))
 		{

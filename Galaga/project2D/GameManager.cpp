@@ -1,5 +1,5 @@
 #include "GameManager.h"
-
+#include <random>
 #include "GameStateManager.h"
 
 GameManager::GameManager(GameStateManager* a_gameState)
@@ -24,6 +24,7 @@ GameManager::GameManager(GameStateManager* a_gameState)
 	backGroundPosition = Vector2(0, 0);
 	GameState = a_gameState;
 	alienMegaPrime = new extraAlien(Vector3(60, 700, 0));
+	gameIsOver = false;
 }
 
 
@@ -42,6 +43,7 @@ GameManager::~GameManager()
 
 void GameManager::update(float deltaTime)
 {
+	alienShoot += deltaTime;
 	backGroundPosition.y -= 500.0f * deltaTime;
 	if (backGroundPosition.y <= -340)
 	{
@@ -53,10 +55,10 @@ void GameManager::update(float deltaTime)
 		BulletUpdate(deltaTime);
 		for (int i = 0; i < 55; i++)
 		{
-			if (aliens[i]->isVisible)
-			{
+			//if (aliens[i]->isVisible)
+			//{
 				aliens[i]->Update(deltaTime);
-			}
+			//}
 		}
 		DidILose();
 		PlayerTakeDamage();
@@ -84,15 +86,29 @@ void GameManager::update(float deltaTime)
 
 	alienMegaPrime->Update(deltaTime);
 
+	if (alienShoot > 2.0f)
+	{
+		int randomChoice = randRange(0, 54);
+
+		if (!aliens[randomChoice]->isVisible)
+		{
+			std::cout << "alien is dead" << std::endl;
+			alienShoot = 1.9999999f;
+		}
+		aliens[randomChoice]->AlienShoot();
+		alienShoot = 0.0f;
+	}
+
 	if (won)
 	{
 		GameState->setState(GameState->Won);
+		gameIsOver = true;
 	}
 }
 
 void GameManager::draw(aie::Renderer2D* a_renderer)
 {
-	a_renderer->drawSprite(m_Background, 800 / 2, backGroundPosition.y, 800, 2160);
+	//a_renderer->drawSprite(m_Background, 800 / 2, backGroundPosition.y, 800, 2160);
 	if (!gameOver)
 	{
 
@@ -155,6 +171,7 @@ void GameManager::DidILose()
 		m_killed->play();
 		gameOver = true;
 		GameState->setState(GameState->GameOver);
+		gameIsOver = true;
 	}
 }
 
@@ -165,6 +182,11 @@ void GameManager::PlayerTakeDamage()
 		if (aliens[i]->isVisible)
 		{
 			if (aliens[i]->collCheck->collidesWith(*Player->collCheck))
+			{
+				Player->takeDamage(100);
+			}
+
+			if (aliens[i]->mBullet->collCheck->collidesWith(*Player->collCheck))
 			{
 				Player->takeDamage(100);
 			}
@@ -261,4 +283,29 @@ void GameManager::CheckWon()
 	{
 		won = true;
 	}
+}
+
+void GameManager::ResetPositions()
+{
+	Player->takeDamage(-100);
+	won = false;
+	gameOver = false;
+	gameIsOver = false;
+
+	for (int j = 0; j < 5; j++)
+	{
+		for (int i = 0; i < 11; i++)
+		{
+			aliens[j * 11 + i]->isVisible = true;
+			aliens[j * 11 + i]->setDirection(true);
+			aliens[j * 11 + i]->SetLocal((Vector3(50 * (i + 1), 720 - ((j + 1) * 80), 0)));
+		}
+	}
+}
+
+int GameManager::randRange(unsigned int min, unsigned int max) {
+	std::random_device rand;
+	std::mt19937 eng(rand());
+	std::uniform_int_distribution<> range(min, max);
+	return(range(eng));
 }

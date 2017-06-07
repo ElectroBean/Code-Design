@@ -1,5 +1,5 @@
 #include "Bullet.h"
-
+#include "Alien.h"
 
 
 Bullet::Bullet(const Vector3& a_pos, const float a_rotation, aie::Texture* const a_texture)
@@ -23,10 +23,21 @@ Bullet::~Bullet()
 
 void Bullet::update(float deltaTime)
 {
-		*Global = *(Local);
-	if (isVisible)
+	*Global = *(Local);
+	if (!parent)
 	{
-		Local->position.y += 1000.0f * deltaTime;
+		if (isVisible)
+		{
+			Local->position.y += 1000.0f * deltaTime;
+			collCheck->x = Local->columns[2].x;
+			collCheck->y = Local->columns[2].y;
+			ScreenWrap();
+		}
+
+	}
+	else if (parent)
+	{
+		Local->position.y -= 500.0f * deltaTime;
 		collCheck->x = Local->columns[2].x;
 		collCheck->y = Local->columns[2].y;
 		ScreenWrap();
@@ -55,6 +66,11 @@ void Bullet::setPosition(Vector3 position)
 	collCheck->y = position.y;
 }
 
+void Bullet::setAlien(Alien * a_alien)
+{
+	parent = a_alien;
+}
+
 void Bullet::SetSpeed(const float a_speed)
 {
 	fSpeed = a_speed;
@@ -64,7 +80,7 @@ void Bullet::SetSpeed(const float a_speed)
 
 void Bullet::ScreenWrap()
 {
-	if (Local->columns[2].y > 720)
+	if (Local->columns[2].y > 720 || Local->columns[2].y < 0)
 	{
 		isVisible = false;
 	}

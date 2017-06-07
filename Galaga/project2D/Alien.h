@@ -21,17 +21,24 @@ public:
 	void interpolate(float deltaTime);			//moves aliens across the screen
 	void die();
 
+	void setDirection(bool a_setting);
+
 	void setMoveSpeed(float aMoveSpeed);		//changes movement delay
+
+	void SetLocal(Vector3 a_position);
+
+	void AlienShoot();
 
 	Matrix3*		Global = nullptr;
 	aabb*				collCheck;
 	bool isVisible;
+	Bullet* mBullet;
+	
 protected:
 	Object * parent = nullptr;
 	std::vector<Object>* children = nullptr;
 	Matrix3*		Local = nullptr;
 	aie::Texture*	Texture = nullptr;
-	Bullet *mBullets[100];
 	aie::Texture*		m_bullet;
 	float moveTimer;
 	bool direction = true;
@@ -40,6 +47,7 @@ protected:
 	float moveTimer2;
 	float movedDownTimer = 0.0f;
 	float moveDelay;
+	float ShootTimer = 0.0f;
 
 	aie::Audio* sound1;
 	aie::Audio* sound2;

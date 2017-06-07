@@ -6,6 +6,7 @@
 #include <Texture.h>
 #include "Renderer2D.h""
 
+class Alien;
 class Bullet 
 {
 public:
@@ -20,6 +21,8 @@ public:
 
 	void setPosition(Vector3 position);
 
+	void setAlien(Alien* a_alien);
+
 	void SetSpeed(const float a_speed);
 	void ScreenWrap();
 	void drawAABB(aie::Renderer2D * renderer);
@@ -28,8 +31,9 @@ public:
 	Matrix3*		Global = nullptr;
 	Matrix3*		Local = nullptr;
 	aabb* collCheck = nullptr;
+
 protected:
-	Bullet * parent = nullptr;
+	Alien * parent = nullptr;
 	std::vector<Bullet>* children = nullptr;
 	aie::Texture*	Texture = nullptr;
 	float fSpeed = 0.0f;

@@ -11,7 +11,7 @@ GameStateManager::GameStateManager(Application2D* application)
 {
 	worldManager = new GameManager(this);
 	gameOverScreen = new GameOverScreen(this);
-	menuScreen = new MenuState(this);
+	menuScreen = new MenuState(this, worldManager);
 	GameState = State::Menu;
 	this->application = application;
 	controlsScreen = new Controls(this);

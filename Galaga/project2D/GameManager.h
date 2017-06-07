@@ -35,6 +35,11 @@ public:
 
 	void CheckWon();
 
+	void ResetPositions();
+
+	int randRange(unsigned int min, unsigned int max);
+
+	bool gameIsOver = false;
 private:
 	Object* Player;
 	aie::Audio* m_invaderKilled;
@@ -44,6 +49,7 @@ private:
 	Vector2 backGroundPosition;
 	GameStateManager* GameState;
 	bool won = false;
+	float alienShoot = 0.0f;
 
 	Alien* aliens[55];
 	Alien* randomAlien;
