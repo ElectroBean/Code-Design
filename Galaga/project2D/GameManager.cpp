@@ -287,11 +287,6 @@ void GameManager::CheckWon()
 
 void GameManager::ResetPositions()
 {
-	Player->takeDamage(-100);
-	won = false;
-	gameOver = false;
-	gameIsOver = false;
-
 	for (int j = 0; j < 5; j++)
 	{
 		for (int i = 0; i < 11; i++)
@@ -299,8 +294,14 @@ void GameManager::ResetPositions()
 			aliens[j * 11 + i]->isVisible = true;
 			aliens[j * 11 + i]->setDirection(true);
 			aliens[j * 11 + i]->SetLocal((Vector3(50 * (i + 1), 720 - ((j + 1) * 80), 0)));
+			aliens[j * 11 + i]->mBullet->isVisible = false;
+			aliens[j * 11 + i]->mBullet->setPosition(Vector3(0, 0, 0));
 		}
 	}
+	Player->takeDamage(-100);
+	won = false;
+	gameOver = false;
+	gameIsOver = false;
 }
 
 int GameManager::randRange(unsigned int min, unsigned int max) {
