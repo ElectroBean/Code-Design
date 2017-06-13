@@ -108,7 +108,7 @@ void GameManager::update(float deltaTime)
 
 void GameManager::draw(aie::Renderer2D* a_renderer)
 {
-	//a_renderer->drawSprite(m_Background, 800 / 2, backGroundPosition.y, 800, 2160);
+	a_renderer->drawSprite(m_Background, 800 / 2, backGroundPosition.y, 800, 2160);
 	if (!gameOver)
 	{
 
@@ -173,7 +173,7 @@ void GameManager::DidILose()
 		GameState->setState(GameState->GameOver);
 		gameIsOver = true;
 	}
-}
+} 
 
 void GameManager::PlayerTakeDamage()
 {
@@ -192,7 +192,7 @@ void GameManager::PlayerTakeDamage()
 			}
 		}
 	}
-}
+}	
 
 void GameManager::AliensMoveDown()
 {
