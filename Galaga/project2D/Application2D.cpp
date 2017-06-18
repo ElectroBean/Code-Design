@@ -3,6 +3,7 @@
 #include "Font.h"
 #include "Input.h"
 #include <string>
+typedef std::shared_ptr<Resource<aie::Texture>> TexturePtr;
 
 Application2D::Application2D() {
 
@@ -23,6 +24,12 @@ bool Application2D::startup() {
 
 	m_gameStateManager = new GameStateManager(this);
 
+	//resource manager testing
+	TexturePtr pShip = m_images.get("./textures/ship.png");
+	m_player = new TempPlayer(pShip);
+
+	std::cout << "images loaded: " << m_images.getCount() << std::endl;
+
 	return true;
 }
 
@@ -31,6 +38,14 @@ void Application2D::shutdown()
 	delete m_font;
 	delete m_2dRenderer;
 	delete m_gameStateManager;
+
+	//resource manager testing 
+	std::cout << "images loaded: " << m_images.getCount() << std::endl;
+
+	delete m_player;
+	m_images.collectGarbage();
+
+	std::cout << "images loaded: " << m_images.getCount() << std::endl;
 }
 
 void Application2D::update(float deltaTime) {

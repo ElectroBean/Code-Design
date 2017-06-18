@@ -5,6 +5,9 @@
 #include "Audio.h"
 #include "GameManager.h"
 #include "GameStateManager.h"
+//resource manager testing
+#include "ResourceManager.h"
+#include "TempPlayer.h"
 
 class Application2D : public aie::Application {
 public:
@@ -24,6 +27,11 @@ protected:
 	aie::Font*			m_font;
 	aie::Audio*			m_audio;
 	GameStateManager*	m_gameStateManager;
+
+	//resource manager testing
+	ResourceManager<aie::Texture> m_images;
+	TempPlayer* m_player;
+
 
 	float m_cameraX, m_cameraY;
 	float m_timer;

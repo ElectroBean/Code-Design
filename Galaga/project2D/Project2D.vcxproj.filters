@@ -25,6 +25,12 @@
     <Filter Include="Header Files\GameStates">
       <UniqueIdentifier>{94f658e5-e154-4594-a318-5c28de3f6a6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Resource Manager">
+      <UniqueIdentifier>{70817ede-a6af-4ee1-ab16-afcdc81a7548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ResourceManagerTest">
+      <UniqueIdentifier>{57d59f0d-1d45-4add-ae50-594147e83745}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application2D.cpp">
@@ -109,6 +115,15 @@
     </ClInclude>
     <ClInclude Include="WinScreen.h">
       <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files\Resource Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Header Files\Resource Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TempPlayer.h">
+      <Filter>Header Files\Resource Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
