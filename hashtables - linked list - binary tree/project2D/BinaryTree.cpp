@@ -1,6 +1,6 @@
 #include "BinaryTree.h"
 #include "TreeNode.h"
-
+#include <iostream>
 
 BinaryTree::BinaryTree()
 {
@@ -64,6 +64,93 @@ void BinaryTree::Add(int value)
 	}
 }
 
+void BinaryTree::Delete(int value)
+{
+	Node* nodeValue = nullptr;
+	Node* nodeParent = nullptr;
+	Node* currentNode = nullptr;
+	Node* currentParent = nullptr;
+	FindNode(value, nodeValue, nodeParent);
+	if (!nodeValue)
+	{
+		std::cout << "node not found" << std::endl;
+	}
+	else
+	{
+		if (nodeValue->m_pRight != NULL)
+		{
+			currentNode = nodeValue;
+			while (currentNode->m_pRight != NULL)
+			{
+				currentParent = currentNode;
+				currentNode = currentNode->m_pRight;
+			}
+			
+			if (nodeParent->m_pLeft == nodeValue)
+			{
+				nodeParent->m_pLeft = currentNode->m_pRight;
+			}
+			else if (nodeParent->m_pRight == nodeValue)
+			{
+				nodeParent->m_pRight = currentNode->m_pRight;
+			}
+		}
+		else if (nodeValue->m_pRight == NULL)
+		{
+			if (nodeParent->m_pLeft == nodeValue)
+			{
+				nodeParent->m_pLeft = currentNode->m_pLeft;
+			}
+			else if (nodeParent->m_pRight == nodeValue)
+			{
+				nodeParent->m_pRight = currentNode->m_pLeft;
+			}
+		}
+		if (nodeValue == m_pRoot)
+		{
+			currentNode->m_pLeft = m_pRoot;
+		}
+	}
+}
+
+void BinaryTree::FindNode(int value, Node* node, Node* aParent)
+{
+	Node* temp = m_pRoot;
+	Node* parent;
+
+	while (temp != NULL)
+	{
+		if (temp->m_nData == value)
+		{
+			break;
+		}
+
+		if (value > temp->m_nData)
+		{
+			parent = temp;
+			temp = temp->m_pRight;
+		}
+		else if (value < temp->m_nData)
+		{
+			parent = temp;
+			temp = temp->m_pLeft;
+		}
+	}
+
+
+	if (temp == NULL)
+	{
+		std::cout << "node not found" << std::endl;
+	}
+	if (temp->m_nData == value)
+	{
+		node = temp;
+		aParent = parent;
+		std::cout << "node found" << std::endl;
+	}
+}
+
+
 bool BinaryTree::RemoveHelper(Node* parent, Node* current, int value)
 {
 	if (!current) return false;
@@ -99,3 +186,4 @@ bool BinaryTree::RemoveHelper(Node* parent, Node* current, int value)
 	return RemoveHelper(current, current->m_pLeft, value) ||
 		   RemoveHelper(current, current->m_pRight, value);
 }
+

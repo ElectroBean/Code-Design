@@ -11,10 +11,12 @@ public:
 	void Insert(Node* root, int a_nValue);
 	bool Remove(int a_nValue);
 	void Add(int value);
+	void Delete(int value);
+	void FindNode(int value, Node* node, Node* aParent);
 
 	bool RemoveHelper(Node * parent, Node * current, int value);
 
-private:
+public:
 	struct Node
 	{
 		Node(int nValue) :
