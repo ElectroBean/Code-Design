@@ -1,6 +1,5 @@
 #include "Application2D.h"
 #include <crtdbg.h>
-#include <vld.h>
 
 
 

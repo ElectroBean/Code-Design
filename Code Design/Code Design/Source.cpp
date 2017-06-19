@@ -12,10 +12,10 @@ int partition(int* a, int low, int high);
 void main()
 {
 	const int iArraySize = 10;
-	int iArray[iArraySize] = { 3, 5, 4, 1, 2, 6, 8, 9, 7, 10};
+	int iArray[iArraySize] = { 3, 5, 4, 1, 2, 6, 7, 8, 9, 10};
 	//sort(iArray, iArraySize);
-	//Bogosort(iArray, iArraySize);
-	QuickSort(iArray, 0, iArraySize);
+	Bogosort(iArray, iArraySize);
+	//QuickSort(iArray, 0, iArraySize);
 
 	for (int i = 0; i < iArraySize; i++)
 	{
