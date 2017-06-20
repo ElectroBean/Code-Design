@@ -64,56 +64,66 @@ void BinaryTree::Add(int value)
 	}
 }
 
+//my remove
 void BinaryTree::Delete(int value)
 {
-	Node* nodeValue = nullptr;
-	Node* nodeParent = nullptr;
 	Node* currentNode = nullptr;
-	Node* currentParent = nullptr;
-	FindNode(value, nodeValue, nodeParent);
-	if (!nodeValue)
+	Node* parentNode = nullptr;
+
+	FindNode(value, &currentNode, &parentNode);
+	if (!currentNode)
+		return;
+
+	if (currentNode->m_pRight)
 	{
-		std::cout << "node not found" << std::endl;
+		//Find the minimum value node in the right subtree
+		Node* pMinNode = currentNode->m_pRight;
+		Node* parentNode = currentNode;
+		while (pMinNode->m_pLeft)
+		{
+			parentNode = pMinNode;
+			pMinNode = pMinNode->m_pLeft;
+		}
+
+		currentNode->m_nData = pMinNode->m_nData;
+
+		if (parentNode->m_pLeft == pMinNode)
+		{
+			parentNode->m_pLeft = pMinNode->m_pRight;
+		}
+		else
+		{
+			parentNode->m_pRight = pMinNode->m_pRight;
+		}
+
+		delete pMinNode;
 	}
 	else
 	{
-		if (nodeValue->m_pRight != NULL)
+		if (parentNode)
 		{
-			currentNode = nodeValue;
-			while (currentNode->m_pRight != NULL)
+			if (parentNode->m_pLeft == currentNode)
 			{
-				currentParent = currentNode;
-				currentNode = currentNode->m_pRight;
+				parentNode->m_pLeft = currentNode->m_pLeft;
+
 			}
-			
-			if (nodeParent->m_pLeft == nodeValue)
+			else
 			{
-				nodeParent->m_pLeft = currentNode->m_pRight;
-			}
-			else if (nodeParent->m_pRight == nodeValue)
-			{
-				nodeParent->m_pRight = currentNode->m_pRight;
+				parentNode->m_pRight = currentNode->m_pLeft;
+
 			}
 		}
-		else if (nodeValue->m_pRight == NULL)
+		else
 		{
-			if (nodeParent->m_pLeft == nodeValue)
-			{
-				nodeParent->m_pLeft = currentNode->m_pLeft;
-			}
-			else if (nodeParent->m_pRight == nodeValue)
-			{
-				nodeParent->m_pRight = currentNode->m_pLeft;
-			}
+			m_pRoot = currentNode->m_pLeft;
+
 		}
-		if (nodeValue == m_pRoot)
-		{
-			currentNode->m_pLeft = m_pRoot;
-		}
+
+		delete currentNode;
 	}
 }
 
-void BinaryTree::FindNode(int value, Node* node, Node* aParent)
+void BinaryTree::FindNode(int value, Node** node, Node** aParent)
 {
 	Node* temp = m_pRoot;
 	Node* parent;
@@ -144,13 +154,13 @@ void BinaryTree::FindNode(int value, Node* node, Node* aParent)
 	}
 	if (temp->m_nData == value)
 	{
-		node = temp;
-		aParent = parent;
+		*node = temp;
+		*aParent = parent;
 		std::cout << "node found" << std::endl;
 	}
 }
 
-
+//internet remove
 bool BinaryTree::RemoveHelper(Node* parent, Node* current, int value)
 {
 	if (!current) return false;

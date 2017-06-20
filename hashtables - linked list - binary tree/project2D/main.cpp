@@ -18,7 +18,7 @@ int main() {
 	tree.Add(9);
 	tree.Add(5);
 	tree.Add(15);
-	tree.Remove(10);
+	//tree.Remove(10);
 	tree.Delete(5);
 	list.push_front(10);
 	list.push_back(5);
