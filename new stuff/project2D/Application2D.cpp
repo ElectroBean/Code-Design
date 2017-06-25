@@ -4,7 +4,7 @@
 #include "Input.h"
 #include "StateManager.h"
 #include "SeekState.h"
-
+#include "IdleState.h"
 
 Application2D::Application2D() {
 
@@ -15,7 +15,7 @@ Application2D::~Application2D() {
 }
 
 bool Application2D::startup() {
-	
+
 	m_2dRenderer = new aie::Renderer2D();
 
 	m_texture = new aie::Texture("./textures/numbered_grid.tga");
@@ -24,19 +24,18 @@ bool Application2D::startup() {
 	m_cameraX = 0;
 	m_cameraY = 0;
 	m_agent.push_back(new Agent(glm::vec2(200, 200)));
-	m_agent.push_back(new Agent(glm::vec2(900, 600)));
-	m_agent.push_back(new Agent(glm::vec2(700, 400)));
+	m_agent.push_back(new Agent(glm::vec2(1280 - 32, 720 - 32)));
 
 	FSM = new StateManager();
-	FSM->changeState(m_agent[0], new SeekState(&m_agent[0]->position, 50.f));
 	m_agent[0]->AddBehaviours(new FollowMouse());
 	m_agent[1]->AddBehaviours(FSM);
+	FSM->changeState(m_agent[1], new IdleState(&m_agent[0]->position, 50.f));
 
 	return true;
 }
 
 void Application2D::shutdown() {
-	
+
 	delete m_texture;
 	delete FSM;
 	delete m_shipTexture;

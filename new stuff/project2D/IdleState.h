@@ -4,10 +4,17 @@ class IdleState :
 	public State
 {
 public:
-	IdleState();
+	IdleState(glm::vec2* target, float maxSpeed);
 	void onEnter(Agent* agent);
 	void onExit(Agent* agent);
-	void update(Agent* agent, StateManager* sm);
+	void update(float deltaTime, Agent* agent, StateManager* sm);
 	~IdleState();
+
+private: 
+	glm::vec2* target;
+	float maxSpeed;
+	glm::vec2* searchPosition;
+	bool directionX;
+	bool directionY;
 };
 

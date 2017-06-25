@@ -23,7 +23,7 @@ void SeekState::onExit(Agent * agent)
 
 }
 
-void SeekState::update(Agent * agent, StateManager * sm)
+void SeekState::update(float deltaTime, Agent * agent, StateManager * sm)
 {
 	glm::vec2 dir = *target - agent->position;
 	dir = glm::normalize(dir);
@@ -31,6 +31,6 @@ void SeekState::update(Agent * agent, StateManager * sm)
 
 	agent->velocity = dir;
 
-	if (glm::distance(agent->position, *target) < 100.0f)
-		sm->changeState(agent, new IdleState());
+	if (glm::distance(agent->position, *target) > 250.0f)
+		sm->changeState(agent, new IdleState(target, maxSpeed));
 }

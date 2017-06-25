@@ -21,5 +21,5 @@ void State::onExit(Agent* agent)
 
 void State::update(float deltaTime, Agent* agent, StateManager* manager)
 {
-
+	
 }

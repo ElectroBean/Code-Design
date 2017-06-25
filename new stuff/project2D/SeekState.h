@@ -12,7 +12,7 @@ public:
 
 	void onEnter(Agent* agent);
 	void onExit(Agent* agent);
-	void update(Agent* agent, StateManager* sm);
+	void update(float deltaTime, Agent* agent, StateManager* sm);
 
 private:
 	glm::vec2* target;
